@@ -9,19 +9,40 @@
 @stop
 
 @section('page_header')
-    <h1 class="page-title">
-        <i class="voyager-pie-chart"></i>
-        Create Stock
-    </h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1 class="page-title">
+                    <i class="voyager-pie-chart"></i>
+                    Edit Stock
+                </h1>
+            </div>
+
+            <div class="col-md-6">
+                <form style="margin-top: 20px" method="POST" action="{{ route('update-stock.declare') }}">
+                    @csrf
+                    <input type="hidden" name="stock_id" value="{{ $stock->id }}">
+                    <button onclick="return alertBeforeDeclare()" class="btn btn-danger" type="submit">DECLARE</button>
+                    <p class="text-danger">(Proceed with caution!)</p>
+                    <p class="text-danger">(You can not update once declared)</p>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
 
 @stop
+
 
 @section('content')
 
     <div class="page-content container">
 
-        <form method="POST" action="{{ route('update-stock.store') }}">
+        <form method="POST" action="{{ route('update-stock.update', $stock->id) }}">
             @csrf
+            @method('PATCH')
             <div class="form-group">
                 <label>RSM Area</label>
                 <select class="form-control" name="rsm_area" id="rsmArea">
@@ -53,7 +74,7 @@
             <div class="form-group">
                 <label>Distributor Name</label><span class="text-danger">*</span>
                 <select class="form-control" name="db_name" id="dbName" required>
-                    <option selected>None selected</option>
+                    <option selected value="{{ $stock->distributor_id }}">{{ $stock->distributor->name }}</option>
                 </select>
             </div>
             <div class="form-group">
@@ -75,40 +96,40 @@
             <div class="form-group">
                 <label>Product Name</label><span class="text-danger">*</span>
                 <select class="form-control" name="product_name" id="productName" required>
-                    <option selected>None selected</option>
+                    <option selected value="{{ $stock->product_id }}">{{ $stock->product->name }}</option>
                 </select>
             </div>
             <div class="form-group">
                 <label>Opening Stock</label><span class="text-danger">*</span>
-                <input class="form-control" type="number" name="opening_stock" required>
+                <input class="form-control" type="number" name="opening_stock" value="{{ $stock->opening_stock }}" required>
             </div>
             <div class="form-group">
                 <label>Already Received</label>
-                <input class="form-control" type="number" name="already_received">
+                <input class="form-control" type="number" name="already_received" value="{{ $stock->already_received }}">
             </div>
             <div class="form-group">
                 <label>Stock in Transit</label>
-                <input class="form-control" type="number" name="stock_in_transit">
+                <input class="form-control" type="number" name="stock_in_transit" value="{{ $stock->stock_in_transit }}">
             </div>
             <div class="form-group">
                 <label>Delivery Done</label>
-                <input class="form-control" type="number" name="delivery_done">
+                <input class="form-control" type="number" name="delivery_done" value="{{ $stock->delivery_done }}">
             </div>
             <div class="form-group">
                 <label>In Delivery Van</label>
-                <input class="form-control" type="number" name="in_delivery_van">
+                <input class="form-control" type="number" name="in_delivery_van" value="{{ $stock->in_delivery_van }}">
             </div>
             <div class="form-group">
                 <label>Physical Stock</label><span class="text-danger">*</span>
-                <input class="form-control" type="number" name="physical_stock" required>
+                <input class="form-control" type="number" name="physical_stock" value="{{ $stock->physical_stock }}" required>
             </div>
             <div class="form-group">
                 <label>Package Date</label>
-                <input class="form-control" type="date" name="pkg_date">
+                <input class="form-control" type="date" name="pkg_date" value="{{ $stock->pkg_date }}">
             </div>
 
             <div class="form-group">
-                <button class="form-control btn btn-success" type="submit">Save</button>
+                <button class="form-control btn btn-success" type="submit">Update</button>
             </div>
 
         </form>
@@ -123,7 +144,30 @@
 @stop
 
 @section('javascript')
+
     <script>
+
+        function alertBeforeDeclare() {
+            value = confirm('Declare? (Can\'t edit anymore!)');
+            if(value) {
+                value = confirm('Are you sure, you want to declare??');
+                if(value) {
+                    input = prompt('Type \'yes\' to declare');
+
+                    if(input === 'yes') {
+                        value = true;
+                    } else {
+                        value = false;
+                    }
+                }
+            }
+
+            return value;
+        }
+
+
+
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -142,7 +186,7 @@
                         $('#asmArea').empty();
                         $('#asmArea').append('<option>None selected</option>');
                         $.each(data,function(index){
-                            $('#asmArea').append('<option value="'+data[index].asm_area+'">'+data[index].asm_area+'</option>');
+                            $('#asmArea').append('<option  value="'+data[index].asm_area+'">'+data[index].asm_area+'</option>');
                         })
                     }
                 })

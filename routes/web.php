@@ -18,9 +18,10 @@ Route::get('/', function () {
 });
 
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
     Route::resource('update-stock', 'StockUpdateController');
+    Route::post('update-stock/declare', 'StockUpdateController@declare')->name('update-stock.declare');
 });
 
 Route::post('/get-asm-area', 'StockUpdateController@get_asm_area');
