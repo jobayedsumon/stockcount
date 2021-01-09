@@ -20,7 +20,7 @@
 
     <div class="page-content container">
 
-        <table id="Table_ID">
+        <table id="Table_ID" class="table">
             <thead>
             <tr>
                 <th>S/L No</th>

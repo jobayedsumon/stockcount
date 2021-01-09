@@ -1,7 +1,16 @@
+body {
+    font-family: Sans-Serif !important;
+
+}
+
 label {
     font-weight: bold;
 }
 
 .purchase, .ims {
     display: none;
+}
+
+.table {
+    color: #333 !important;
 }
