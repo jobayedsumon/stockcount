@@ -1,0 +1,7 @@
+label {
+    font-weight: bold;
+}
+
+.purchase, .ims {
+    display: none;
+}

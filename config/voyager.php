@@ -145,7 +145,10 @@ return [
         ],
 
         'widgets' => [
-
+//            'App\\Widgets\\UserDimmer',
+            'App\\Widgets\\DistributorDimmer',
+            'App\\Widgets\\ProductDimmer',
+            'App\\Widgets\\StockRecordDimmer',
         ],
 
     ],
@@ -188,21 +191,21 @@ return [
 
     // Here you can specify additional assets you would like to be included in the master.blade
     'additional_css' => [
-        //'css/custom.css',
+        'css/custom.css',
     ],
 
     'additional_js' => [
         //'js/custom.js',
     ],
 
-    'googlemaps' => [
-        'key'    => env('GOOGLE_MAPS_KEY', ''),
-        'center' => [
-            'lat' => env('GOOGLE_MAPS_DEFAULT_CENTER_LAT', '32.715738'),
-            'lng' => env('GOOGLE_MAPS_DEFAULT_CENTER_LNG', '-117.161084'),
-        ],
-        'zoom' => env('GOOGLE_MAPS_DEFAULT_ZOOM', 11),
-    ],
+//    'googlemaps' => [
+//        'key'    => env('GOOGLE_MAPS_KEY', ''),
+//        'center' => [
+//            'lat' => env('GOOGLE_MAPS_DEFAULT_CENTER_LAT', '32.715738'),
+//            'lng' => env('GOOGLE_MAPS_DEFAULT_CENTER_LNG', '-117.161084'),
+//        ],
+//        'zoom' => env('GOOGLE_MAPS_DEFAULT_ZOOM', 11),
+//    ],
 
     /*
     |--------------------------------------------------------------------------

@@ -22,94 +22,125 @@
 
         <form method="POST" action="{{ route('update-stock.store') }}">
             @csrf
-            <div class="form-group">
-                <label>RSM Area</label>
-                <select class="form-control" name="rsm_area" id="rsmArea">
-                    <option selected value="">None Selected</option>
-                    @forelse($distributors as $distributor)
-                    <option value="{{ $distributor->rsm_area }}">{{ $distributor->rsm_area }}</option>
-                    @empty
-                    @endforelse
-                </select>
-            </div>
-            <div class="form-group">
-                <label>ASM Area</label>
-                <select class="form-control" name="asm_area" id="asmArea">
-                    <option selected>None selected</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>TSO Area</label>
-                <select class="form-control" name="tso_area" id="tsoArea">
-                    <option selected>None selected</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Distribution Area</label>
-                <select class="form-control" name="db_area" id="dbArea">
-                    <option selected>None selected</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Distributor Name</label><span class="text-danger">*</span>
-                <select class="form-control" name="db_name" id="dbName" required>
-                    <option selected>None selected</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Product Brand</label>
-                <select class="form-control" name="product_brand" id="productBrand">
-                    <option selected>None selected</option>
-                    @forelse($products as $product)
-                        <option value="{{ $product->brandname }}">{{ $product->brandname }}</option>
-                    @empty
-                    @endforelse
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Product Category</label>
-                <select class="form-control" name="product_category" id="productCategory">
-                    <option selected>None selected</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Product Name</label><span class="text-danger">*</span>
-                <select class="form-control" name="product_name" id="productName" required>
-                    <option selected>None selected</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Opening Stock</label><span class="text-danger">*</span>
-                <input class="form-control" type="number" name="opening_stock" required>
-            </div>
-            <div class="form-group">
-                <label>Already Received</label>
-                <input class="form-control" type="number" name="already_received">
-            </div>
-            <div class="form-group">
-                <label>Stock in Transit</label>
-                <input class="form-control" type="number" name="stock_in_transit">
-            </div>
-            <div class="form-group">
-                <label>Delivery Done</label>
-                <input class="form-control" type="number" name="delivery_done">
-            </div>
-            <div class="form-group">
-                <label>In Delivery Van</label>
-                <input class="form-control" type="number" name="in_delivery_van">
-            </div>
-            <div class="form-group">
-                <label>Physical Stock</label><span class="text-danger">*</span>
-                <input class="form-control" type="number" name="physical_stock" required>
-            </div>
-            <div class="form-group">
-                <label>Package Date</label>
-                <input class="form-control" type="date" name="pkg_date">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Distributor and Product Filtering</h3>
+                    <div class="form-group">
+                        <label>RSM Area</label>
+                        <select class="form-control" name="rsm_area" id="rsmArea">
+                            <option selected value="">None Selected</option>
+                            @forelse($distributors as $distributor)
+                                <option value="{{ $distributor->rsm_area }}">{{ $distributor->rsm_area }}</option>
+                            @empty
+                            @endforelse
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>ASM Area</label>
+                        <select class="form-control" name="asm_area" id="asmArea">
+                            <option selected>None selected</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>TSO Area</label>
+                        <select class="form-control" name="tso_area" id="tsoArea">
+                            <option selected>None selected</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Distribution Area</label>
+                        <select class="form-control" name="db_area" id="dbArea">
+                            <option selected>None selected</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Distributor Name</label><span class="text-danger">*</span>
+                        <select class="form-control" name="db_name" id="dbName" required>
+                            <option selected>None selected</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Product Brand</label>
+                        <select class="form-control" name="product_brand" id="productBrand">
+                            <option selected>None selected</option>
+                            @forelse($products as $product)
+                                <option value="{{ $product->brandname }}">{{ $product->brandname }}</option>
+                            @empty
+                            @endforelse
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Product Category</label>
+                        <select class="form-control" name="product_category" id="productCategory">
+                            <option selected>None selected</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Product Name</label><span class="text-danger">*</span>
+                        <select class="form-control" name="product_name" id="productName" required>
+                            <option selected>None selected</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h3>Product Stock Management</h3>
+
+                    <div class="form-group">
+                        <label>Opening Stock</label><span class="text-danger">*</span>
+                        <input class="form-control" type="number" name="opening_stock" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input id="purchase" type="checkbox" value="purchase">
+                        <label for="purchase">Purchase</label>
+                    </div>
+
+                    <div class="purchase">
+                        <div class="form-group">
+                            <label>Already Received</label>
+                            <input class="form-control" type="number" name="already_received">
+                        </div>
+                        <div class="form-group">
+                            <label>Stock in Transit</label>
+                            <input class="form-control" type="number" name="stock_in_transit">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input id="ims" type="checkbox" value="ims">
+                        <label for="ims">IMS</label>
+                    </div>
+
+                    <div class="ims">
+                        <div class="form-group">
+                            <label>Delivery Done</label>
+                            <input class="form-control" type="number" name="delivery_done">
+                        </div>
+                        <div class="form-group">
+                            <label>In Delivery Van</label>
+                            <input class="form-control" type="number" name="in_delivery_van">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Physical Stock</label><span class="text-danger">*</span>
+                        <input class="form-control" type="number" name="physical_stock" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Package Date</label>
+                        <input class="form-control" type="date" name="pkg_date">
+                    </div>
+
+                    <div class="form-group">
+                        <button class="form-control btn btn-success" type="submit">Save</button>
+                    </div>
+                </div>
             </div>
 
-            <div class="form-group">
-                <button class="form-control btn btn-success" type="submit">Save</button>
-            </div>
+
+
+
 
         </form>
 
@@ -237,7 +268,18 @@
                     }
                 })
             });
+
+            $('input[type="checkbox"]').click(function(){
+                var inputValue = $(this).attr("value");
+                $("." + inputValue).toggle('slow');
+            });
+
+
         });
+
+
+
+
     </script>
 @stop
 
