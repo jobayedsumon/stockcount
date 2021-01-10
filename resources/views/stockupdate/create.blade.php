@@ -8,13 +8,6 @@
 
 @stop
 
-@section('page_header')
-    <h1 class="page-title">
-        <i class="voyager-pie-chart"></i>
-        Create Stock
-    </h1>
-
-@stop
 
 @section('content')
 
@@ -22,11 +15,9 @@
 
         <form method="POST" action="{{ route('update-stock.store') }}">
             @csrf
-
-            <div class="row">
-                <div class="col-md-6">
-                    <h3>Distributor and Product Filtering</h3>
-                    <div class="form-group">
+                <div class="row">
+                    <h4 class="text-success text-center">Distributor Filtering</h4>
+                    <div class="form-group col-md-3">
                         <label>RSM Area</label>
                         <select class="form-control" name="rsm_area" id="rsmArea">
                             <option selected value="">None Selected</option>
@@ -36,31 +27,30 @@
                             @endforelse
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-md-3" id="asm">
                         <label>ASM Area</label>
                         <select class="form-control" name="asm_area" id="asmArea">
                             <option selected>None selected</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-md-3" id="tso">
                         <label>TSO Area</label>
                         <select class="form-control" name="tso_area" id="tsoArea">
                             <option selected>None selected</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Distribution Area</label>
-                        <select class="form-control" name="db_area" id="dbArea">
-                            <option selected>None selected</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
+
+                    <div class="form-group col-md-3" id="db">
                         <label>Distributor Name</label><span class="text-danger">*</span>
                         <select class="form-control" name="db_name" id="dbName" required>
                             <option selected>None selected</option>
                         </select>
                     </div>
-                    <div class="form-group">
+
+                </div>
+                <div class="row">
+                    <h4 class="text-success text-center">Product Filtering</h4>
+                    <div class="form-group col-md-4">
                         <label>Product Brand</label>
                         <select class="form-control" name="product_brand" id="productBrand">
                             <option selected>None selected</option>
@@ -70,77 +60,70 @@
                             @endforelse
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-md-4">
                         <label>Product Category</label>
                         <select class="form-control" name="product_category" id="productCategory">
                             <option selected>None selected</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-md-4">
                         <label>Product Name</label><span class="text-danger">*</span>
                         <select class="form-control" name="product_name" id="productName" required>
                             <option selected>None selected</option>
                         </select>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <h3>Product Stock Management</h3>
+            </div>
 
-                    <div class="form-group">
+                <div class="row">
+                    <h4 class="text-success text-center">Product Stock Management</h4>
+
+                    <div class="form-group col-md-4">
                         <label>Opening Stock</label><span class="text-danger">*</span>
                         <input class="form-control" type="number" name="opening_stock" required>
                     </div>
 
-                    <div class="form-group">
-                        <input id="purchase" type="checkbox" value="purchase">
-                        <label for="purchase">Purchase</label>
+                    <div class="form-group col-md-4">
+                        <label>Physical Stock</label><span class="text-danger">*</span>
+                        <input class="form-control" type="number" name="physical_stock" required>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Package Date</label>
+                        <input class="form-control" type="date" name="pkg_date">
                     </div>
 
-                    <div class="purchase">
-                        <div class="form-group">
+                </div>
+
+            <div class="row">
+
+                <h4 class="text-success text-center">Product Purchase / IMS Data (Optional)</h4>
+
+                    <div class="purchase col-md-6">
+                        <div class="form-group col-md-6">
                             <label>Already Received</label>
                             <input class="form-control" type="number" name="already_received">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-6">
                             <label>Stock in Transit</label>
                             <input class="form-control" type="number" name="stock_in_transit">
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <input id="ims" type="checkbox" value="ims">
-                        <label for="ims">IMS</label>
-                    </div>
-
-                    <div class="ims">
-                        <div class="form-group">
+                    <div class="ims col-md-6">
+                        <div class="form-group col-md-6">
                             <label>Delivery Done</label>
                             <input class="form-control" type="number" name="delivery_done">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-6">
                             <label>In Delivery Van</label>
                             <input class="form-control" type="number" name="in_delivery_van">
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label>Physical Stock</label><span class="text-danger">*</span>
-                        <input class="form-control" type="number" name="physical_stock" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Package Date</label>
-                        <input class="form-control" type="date" name="pkg_date">
-                    </div>
-
-                    <div class="form-group">
-                        <button class="form-control btn btn-success" type="submit">Save</button>
-                    </div>
-                </div>
             </div>
 
-
-
-
+            <div class="form-group">
+                <button style="width: 50%" class="form-control btn btn-success col-xs-offset-3" type="submit">Save</button>
+            </div>
 
         </form>
 
@@ -176,7 +159,8 @@
                             $('#asmArea').append('<option value="'+data[index].asm_area+'">'+data[index].asm_area+'</option>');
                         })
                     }
-                })
+                });
+                $('#asm').show('slow');
             });
 
             $('#asmArea').on('change',function(e) {
@@ -194,34 +178,17 @@
                             $('#tsoArea').append('<option value="'+data[index].tso_area+'">'+data[index].tso_area+'</option>');
                         })
                     }
-                })
+                });
+                $('#tso').show('slow');
             });
 
             $('#tsoArea').on('change',function(e) {
                 var tso_area = e.target.value;
                 $.ajax({
-                    url:"/get-db-area",
-                    type:"POST",
-                    data: {
-                        tso_area: tso_area
-                    },
-                    success:function (data) {
-                        $('#dbArea').empty();
-                        $('#dbArea').append('<option>None selected</option>');
-                        $.each(data,function(index){
-                            $('#dbArea').append('<option value="'+data[index].dbareaname+'">'+data[index].dbareaname+'</option>');
-                        })
-                    }
-                })
-            });
-
-            $('#dbArea').on('change',function(e) {
-                var db_area = e.target.value;
-                $.ajax({
                     url:"/get-db-name",
                     type:"POST",
                     data: {
-                        db_area: db_area
+                        tso_area: tso_area
                     },
                     success:function (data) {
                         $('#dbName').empty();
@@ -230,7 +197,8 @@
                             $('#dbName').append('<option value="'+data[index].id+'">'+data[index].name+'</option>');
                         })
                     }
-                })
+                });
+                $('#db').show('slow');
             });
 
             $('#productBrand').on('change',function(e) {

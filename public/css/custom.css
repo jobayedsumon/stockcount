@@ -7,10 +7,11 @@ label {
     font-weight: bold;
 }
 
-.purchase, .ims {
-    display: none;
+
+.table, label, option {
+    color: #333 !important;
 }
 
-.table {
-    color: #333 !important;
+#asm, #tso, #db {
+    display: none;
 }

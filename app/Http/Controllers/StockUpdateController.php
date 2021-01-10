@@ -39,17 +39,9 @@ class StockUpdateController extends Controller
         return response()->json($data);
     }
 
-
-    public function get_db_area(Request $request)
-    {
-        $data = Distributor::where('tso_area', $request->tso_area)->select('dbareaname')->distinct()->get();
-
-        return response()->json($data);
-    }
-
     public function get_db_name(Request $request)
     {
-        $data = Distributor::where('dbareaname', $request->db_area)->select('id', 'name')->distinct()->get();
+        $data = Distributor::where('tso_area', $request->tso_area)->select('id', 'name')->distinct()->get();
 
         return response()->json($data);
     }
