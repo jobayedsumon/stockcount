@@ -3,6 +3,10 @@ body {
 
 }
 
+.pl-0 {
+    padding-left: 0;
+}
+
 label {
     font-weight: bold;
 }
@@ -12,6 +16,6 @@ label {
     color: #333 !important;
 }
 
-#asm, #tso, #db {
+#asm, #tso, #db, #category, #name {
     display: none;
 }

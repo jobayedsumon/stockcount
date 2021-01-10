@@ -5,6 +5,7 @@
     <link href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
 
+
 @stop
 
 @section('page_header')
@@ -94,6 +95,9 @@
 @section('javascript')
 
     <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+
+
 
     // <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
     // <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>

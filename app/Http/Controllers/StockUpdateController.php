@@ -55,7 +55,7 @@ class StockUpdateController extends Controller
 
     public function get_product_name(Request $request)
     {
-        $data = Product::where('categoryname', $request->product_category)->select('id', 'name')->distinct()->get();
+        $data = Product::where('brandname', $request->product_brand)->where('categoryname', $request->product_category)->select('id', 'name')->distinct()->get();
 
         return response()->json($data);
     }
