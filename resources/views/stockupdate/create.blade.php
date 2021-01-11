@@ -11,12 +11,16 @@
 
 @section('content')
 
-    <div class="page-content container">
+    <div class="container">
+
+    <div class="page-content row ml-5">
+
+        <div class="col-md-6">
 
         <form method="POST" action="{{ route('update-stock.store') }}">
             @csrf
                 <div class="row">
-                    <h4 class="text-success">Distributor Filtering</h4>
+                    <h4 class="text-green-600">Distributor Filtering</h4>
                     <div class="form-group col-md-3 pl-0">
                         <label>RSM Area</label>
                         <select class="form-control selectpicker" name="rsm_area" id="rsmArea" data-live-search="true">
@@ -29,27 +33,21 @@
                     </div>
                     <div class="form-group col-md-3" id="asm">
                         <label>ASM Area</label>
-                        <select class="form-control selectpicker" name="asm_area" id="asmArea" data-live-search="true">
-
-                        </select>
+                        <select class="form-control selectpicker" name="asm_area" id="asmArea" data-live-search="true"></select>
                     </div>
                     <div class="form-group col-md-3" id="tso">
                         <label>TSO Area</label>
-                        <select class="form-control selectpicker" name="tso_area" id="tsoArea" data-live-search="true">
-
-                        </select>
+                        <select class="form-control selectpicker" name="tso_area" id="tsoArea" data-live-search="true"></select>
                     </div>
 
                     <div class="form-group col-md-3" id="db">
                         <label>Distributor Name</label><span class="text-danger">*</span>
-                        <select class="form-control selectpicker" name="db_name" id="dbName" required data-live-search="true">
-
-                        </select>
+                        <select class="form-control selectpicker" name="db_name" id="dbName" required data-live-search="true"></select>
                     </div>
 
                 </div>
                 <div class="row">
-                    <h4 class="text-success">Product Filtering</h4>
+                    <h4 class="text-green-600">Product Filtering</h4>
                     <div class="form-group col-md-4 pl-0">
                         <label>Product Brand</label>
                         <select class="form-control selectpicker" name="product_brand" id="productBrand" data-live-search="true">
@@ -62,29 +60,25 @@
                     </div>
                     <div class="form-group col-md-4" id="category">
                         <label>Product Category</label>
-                        <select class="form-control selectpicker" name="product_category" id="productCategory" data-live-search="true">
-
-                        </select>
+                        <select class="form-control selectpicker" name="product_category" id="productCategory" data-live-search="true"></select>
                     </div>
                     <div class="form-group col-md-4" id="name">
                         <label>Product Name</label><span class="text-danger">*</span>
-                        <select class="form-control selectpicker" name="product_name" id="productName" required data-live-search="true">
-
-                        </select>
+                        <select class="form-control selectpicker" name="product_name" id="productName" required data-live-search="true"></select>
                     </div>
             </div>
 
                 <div class="row">
-                    <h4 class="text-success">Product Stock Management</h4>
+                    <h4 class="text-green-600">Product Stock Management</h4>
 
                     <div class="form-group col-md-4 pl-0">
                         <label>Opening Stock</label><span class="text-danger">*</span>
-                        <input class="form-control" type="number" name="opening_stock" required>
+                        <input class="form-control " type="number" min="0" name="opening_stock" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label>Physical Stock</label><span class="text-danger">*</span>
-                        <input class="form-control" type="number" name="physical_stock" required>
+                        <input class="form-control" type="number" min="0" name="physical_stock" required>
                     </div>
                     <div class="form-group col-md-4">
                         <label>Package Date</label>
@@ -95,33 +89,39 @@
 
             <div class="row">
 
-                <h4 class="text-success">Product Purchase / IMS Data (Optional)</h4>
-
-                    <div class="purchase col-md-6 pl-0">
+                    <div class="purchase col-md-6 pl-0 mb-0">
+                        <h4 class="text-green-600 text-center">Product Purchase (Optional)</h4>
                         <div class="form-group col-md-6 pl-0">
                             <label>Already Received</label>
-                            <input class="form-control" type="number" name="already_received">
+                            <input class="form-control" type="number" min="0" name="already_received">
                         </div>
                         <div class="form-group col-md-6">
                             <label>Stock in Transit</label>
-                            <input class="form-control" type="number" name="stock_in_transit">
+                            <input class="form-control" type="number" min="0" name="stock_in_transit">
                         </div>
                     </div>
 
                     <div class="ims col-md-6">
+                        <h4 class="text-green-600 text-center">Product IMS (Optional)</h4>
                         <div class="form-group col-md-6">
                             <label>Delivery Done</label>
-                            <input class="form-control" type="number" name="delivery_done">
+                            <input class="form-control" type="number" min="0" name="delivery_done">
                         </div>
                         <div class="form-group col-md-6">
                             <label>In Delivery Van</label>
-                            <input class="form-control" type="number" name="in_delivery_van">
+                            <input class="form-control" type="number" min="0" name="in_delivery_van">
                         </div>
                     </div>
 
                 <div class="form-group">
-                    <button class=" btn btn-success " type="submit">Save</button>
+                    <button class="btn btn-success bg-green-600 relative bottom-5" type="submit">Save</button>
+
+                    @if(session()->has('msg'))
+                        <span class="text-danger font-bold relative bottom-5">{{ session()->get('msg') }}</span>
+                    @endif
                 </div>
+
+
 
             </div>
 
@@ -129,11 +129,13 @@
 
         </form>
 
+        </div>
+
     </div>
 
 
 
-
+    </div>
 
 
 @stop
@@ -158,7 +160,7 @@
                         rsm_area: rsm_area
                     },
                     success:function (data) {
-                        var html = '';
+                        var html = '<option value="">Nothing Selected</option>';
                         $('#asmArea').empty();
                         $.each(data,function(index){
                             html += '<option value="'+data[index].asm_area+'">'+data[index].asm_area+'</option>';
@@ -180,7 +182,7 @@
                         asm_area: asm_area
                     },
                     success:function (data) {
-                        var html = '';
+                        var html = '<option value="">Nothing Selected</option>';
                         $('#tsoArea').empty();
                         $.each(data,function(index){
                             html += '<option value="'+data[index].tso_area+'">'+data[index].tso_area+'</option>';
@@ -202,7 +204,7 @@
                         tso_area: tso_area
                     },
                     success:function (data) {
-                        var html = '';
+                        var html = '<option value="">Nothing Selected</option>';
                         $('#dbName').empty();
                         $.each(data,function(index){
                            html += '<option value="'+data[index].id+'">'+data[index].name+'</option>';
@@ -224,7 +226,7 @@
                         product_brand: product_brand
                     },
                     success:function (data) {
-                        var html = '';
+                        var html = '<option value="">Nothing Selected</option>';
                         $('#productCategory').empty();
                         $.each(data,function(index){
                             html += '<option value="'+data[index].categoryname+'">'+data[index].categoryname+'</option>';
@@ -248,7 +250,7 @@
                         product_brand: product_brand
                     },
                     success:function (data) {
-                        var html = '';
+                        var html = '<option value="">Nothing Selected</option>';
                         $('#productName').empty();
                         $.each(data,function(index){
                             html += '<option value="'+data[index].id+'">'+data[index].name+'</option>';

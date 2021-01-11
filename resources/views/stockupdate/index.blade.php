@@ -11,10 +11,14 @@
 @section('page_header')
     <h1 class="page-title">
         <i class="voyager-pie-chart"></i>
-        Update Stock
+        Stock Data
     </h1>
 
-        <a class="btn btn-success" href="{{ route('update-stock.create') }}">Create New Stock Record</a>
+    <a class="btn btn-success" href="{{ route('update-stock.create') }}">Create New Stock Record</a>
+
+    @if(session()->has('msg'))
+        <span class="text-success font-bold">{{ session()->get('msg') }}</span>
+    @endif
 @stop
 
 @section('content')
@@ -96,17 +100,6 @@
 
     <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 
-
-
-
-    // <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
-    // <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
-    // <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    // <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    // <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    // <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
-    // <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
-
     <script>
 
             $('document').ready(function () {
@@ -114,7 +107,7 @@
                 function gettime() {
                     var date = new Date();
                     var newdate = (date.getHours() % 12 || 12) + "_" + date.getMinutes() + "_" + date.getSeconds();
-                    //setInterval(gettime, 1000);
+                    setInterval(gettime, 1000);
                     return newdate;
                 }
 
@@ -123,17 +116,29 @@
                 buttons: [
                     {
                         extend: 'excelHtml5',
-                        title: 'Stock Report ' + new Date().toDateString() + ' ' + gettime()
+                        title: 'Stock Report ' + new Date().toDateString() + ' ' + gettime(),
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 5 ]
+                        }
                     },
                     {
                         extend: 'pdfHtml5',
-                        title: 'Stock Report ' + new Date().toDateString() + ' ' + gettime()
+                        title: 'Stock Report ' + new Date().toDateString() + ' ' + gettime(),
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL',
+                        exportOptions: {
+                            columns: ':not(:last-child)',
+                        }
                     },
                     {
                         extend: 'csvHtml5',
-                        title: 'Stock Report ' + new Date().toDateString() + ' ' + gettime()
+                        title: 'Stock Report ' + new Date().toDateString() + ' ' + gettime(),
+                        exportOptions: {
+                            columns: ':not(:last-child)',
+                        }
                     }
                 ]
+
             });
         });
     </script>

@@ -7,6 +7,7 @@ use App\DistributorProduct;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PHPUnit\Framework\Exception;
 use TCG\Voyager\Http\Controllers\VoyagerBaseController;
 
 class StockUpdateController extends Controller
@@ -14,7 +15,7 @@ class StockUpdateController extends Controller
 
     public function index()
     {
-        $stocks = DistributorProduct::all();
+        $stocks = DistributorProduct::latest()->get();
         return view('stockupdate.index', compact('stocks'));
     }
 
@@ -62,21 +63,32 @@ class StockUpdateController extends Controller
 
     public function store(Request $request)
     {
-        DB::table('distributor_products')->insert([
-            'distributor_id' => $request->db_name,
-            'product_id' => $request->product_name,
-            'opening_stock' => $request->opening_stock,
-            'already_received' => $request->already_received,
-            'stock_in_transit' => $request->stock_in_transit,
-            'delivery_done' => $request->delivery_done,
-            'in_delivery_van' => $request->in_delivery_van,
-            'physical_stock' => $request->physical_stock,
-            'pkg_date' => $request->pkg_date,
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
+        try {
+            DB::table('distributor_products')->insert([
+                'distributor_id' => $request->db_name,
+                'product_id' => $request->product_name,
+                'opening_stock' => $request->opening_stock,
+                'already_received' => $request->already_received,
+                'stock_in_transit' => $request->stock_in_transit,
+                'delivery_done' => $request->delivery_done,
+                'in_delivery_van' => $request->in_delivery_van,
+                'physical_stock' => $request->physical_stock,
+                'pkg_date' => $request->pkg_date,
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+        } catch (\Illuminate\Database\QueryException $exception) {
+            if ($exception->errorInfo[1] == 1062) {
+                $msg = 'Stock for this Product and Distributor already exists!';
+            } else {
+                $msg = 'Can not create stock';
+            }
 
-        return redirect(route('update-stock.index'));
+            return redirect(route('update-stock.create'))->with('msg', $msg);
+        }
+
+        $msg = 'Stock created successfully!';
+        return redirect(route('update-stock.index'))->with('msg', $msg);
     }
 
     public function edit($id)
@@ -92,22 +104,37 @@ class StockUpdateController extends Controller
 
     public function update(Request $request, $id)
     {
-        $stock = DistributorProduct::findOrFail($id);
 
-        $stock->update([
-            'distributor_id' => $request->db_name,
-            'product_id' => $request->product_name,
-            'opening_stock' => $request->opening_stock,
-            'already_received' => $request->already_received,
-            'stock_in_transit' => $request->stock_in_transit,
-            'delivery_done' => $request->delivery_done,
-            'in_delivery_van' => $request->in_delivery_van,
-            'physical_stock' => $request->physical_stock,
-            'pkg_date' => $request->pkg_date,
-            'updated_at' => now()
-        ]);
+        try {
 
-        return redirect(route('update-stock.index'));
+            $stock = DistributorProduct::findOrFail($id);
+
+            $stock->update([
+                'distributor_id' => $request->db_name,
+                'product_id' => $request->product_name,
+                'opening_stock' => $request->opening_stock,
+                'already_received' => $request->already_received,
+                'stock_in_transit' => $request->stock_in_transit,
+                'delivery_done' => $request->delivery_done,
+                'in_delivery_van' => $request->in_delivery_van,
+                'physical_stock' => $request->physical_stock,
+                'pkg_date' => $request->pkg_date,
+                'updated_at' => now()
+            ]);
+
+        } catch (\Illuminate\Database\QueryException $exception) {
+            if ($exception->errorInfo[1] == 1062) {
+                $msg = 'Stock for this Product and Distributor already exists!';
+            } else {
+                $msg = 'Can not update stock';
+            }
+
+            return redirect(route('update-stock.edit', $id))->with('msg', $msg);
+        }
+
+        $msg = 'Stock updated successfully!';
+        return redirect(route('update-stock.index'))->with('msg', $msg);
+
     }
 
     public function declare(Request $request)

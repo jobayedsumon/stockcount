@@ -3,16 +3,36 @@ body {
 
 }
 
+a {
+    text-decoration: none !important;
+}
+
 .pl-0 {
     padding-left: 0;
 }
 
-label {
-    font-weight: bold;
+.mb-0 {
+    margin-bottom: 0 !important;
 }
 
+label {
+    color: #777;
+}
 
-.table, label, option {
+.form-control {
+    border: 1px solid green;
+    height: 25px;
+}
+
+.bootstrap-select .btn-default {
+    background-color: #fff !important;
+    border: 1px solid green !important;
+    color: #777 !important;
+    height: 30px;
+    font-size: 12px !important;
+}
+
+.table, option {
     color: #333 !important;
 }
 
