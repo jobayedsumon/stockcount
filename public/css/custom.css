@@ -39,3 +39,11 @@ label {
 #asm, #tso, #db, #category, #name {
     display: none;
 }
+
+.buttons-csv {
+    background-color: yellow !important;
+}
+
+.buttons-excel {
+    background-color: red !important;
+}

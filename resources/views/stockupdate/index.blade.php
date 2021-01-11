@@ -2,9 +2,7 @@
 
 @section('css')
 
-    <link href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.3.1/css/buttons.dataTables.min.css">
 
 @stop
 
@@ -98,7 +96,9 @@
 
 @section('javascript')
 
-    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
 
     <script>
 
@@ -116,30 +116,29 @@
                 buttons: [
                     {
                         extend: 'excelHtml5',
-                        title: 'Stock Report ' + new Date().toDateString() + ' ' + gettime(),
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 5 ]
-                        }
+                        title: 'Stock Report ' + new Date().toDateString() + ' ' + gettime()
+
                     },
                     {
                         extend: 'pdfHtml5',
                         title: 'Stock Report ' + new Date().toDateString() + ' ' + gettime(),
                         orientation: 'landscape',
-                        pageSize: 'LEGAL',
-                        exportOptions: {
-                            columns: ':not(:last-child)',
-                        }
+                        pageSize: 'LEGAL'
+
                     },
                     {
                         extend: 'csvHtml5',
                         title: 'Stock Report ' + new Date().toDateString() + ' ' + gettime(),
-                        exportOptions: {
-                            columns: ':not(:last-child)',
-                        }
+
                     }
                 ]
 
+
             });
+
         });
+
+
+
     </script>
 @stop
