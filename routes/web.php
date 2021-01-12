@@ -22,6 +22,7 @@ Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
     Route::resource('update-stock', 'StockUpdateController');
     Route::post('update-stock/declare', 'StockUpdateController@declare')->name('update-stock.declare');
+    Route::post('update-stock/draft', 'StockUpdateController@draft')->name('update-stock.draft');
 });
 
 Route::post('/get-asm-area', 'StockUpdateController@get_asm_area');

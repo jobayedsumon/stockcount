@@ -80,7 +80,7 @@
                     @if(!$stock->declared)
                         <a class="btn btn-primary" href="{{ route('update-stock.edit', $stock->id) }}">Edit</a>
                     @else
-                        <span class="text-danger">Already Declared</span>
+                        <span class="text-danger font-bold">Already Declared</span>
                     @endif
                 </td>
             </tr>
@@ -116,19 +116,23 @@
                 buttons: [
                     {
                         extend: 'excelHtml5',
-                        title: 'Stock Report ' + new Date().toDateString() + ' ' + gettime()
+                        title: 'Stock Report ' + new Date().toDateString() + ' ' + gettime(),
+                        exportOptions: {
+                            columns: ':not(:last-child)',
+                        }
 
                     },
                     {
                         extend: 'pdfHtml5',
                         title: 'Stock Report ' + new Date().toDateString() + ' ' + gettime(),
-                        orientation: 'landscape',
-                        pageSize: 'LEGAL'
 
                     },
                     {
                         extend: 'csvHtml5',
                         title: 'Stock Report ' + new Date().toDateString() + ' ' + gettime(),
+                        exportOptions: {
+                            columns: ':not(:last-child)',
+                        }
 
                     }
                 ]
