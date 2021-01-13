@@ -149,12 +149,19 @@ $(document).ready(function () {
                 inDeliveryVan: inDeliveryVan,
             },
             success:function (data) {
+                if (data.validationError) {
 
-                if (data.msg) {
+                    $('#validation-errors').empty();
+                    $.each(data.validationError, function(key,value) {
+                        $('#validation-errors').append('<div class="alert alert-danger p-0">'+value+'</div');
+                    });
 
+                } else if (data.msg) {
+                    $('#validation-errors').empty();
                     $('#msg').text(data.msg);
+                }
 
-                } else {
+                else {
                     distributorName = data['distributorName'];
                     productName = data['productName'];
 
@@ -176,16 +183,46 @@ $(document).ready(function () {
 
             },
 
-            error: function (xhr) {
-                console.log(xhr);
-                $('#validation-errors').html('');
-                $.each(xhr.responseJSON.errors, function(key,value) {
-                    $('#validation-errors').append('<div class="alert alert-danger">'+value+'</div');
-                });
-            },
         });
 
     });
+
+
+    function gettime() {
+        var date = new Date();
+        var newdate = (date.getHours() % 12 || 12) + "_" + date.getMinutes() + "_" + date.getSeconds();
+        setInterval(gettime, 1000);
+        return newdate;
+    }
+
+    // $('#Table_ID').DataTable({
+    //     dom: 'Bfrtip',
+    //     buttons: [
+    //         {
+    //             extend: 'excelHtml5',
+    //             title: 'Stock Report ' + new Date().toDateString() + ' ' + gettime(),
+    //             exportOptions: {
+    //                 columns: ':not(:last-child)',
+    //             }
+    //
+    //         },
+    //         {
+    //             extend: 'pdfHtml5',
+    //             title: 'Stock Report ' + new Date().toDateString() + ' ' + gettime(),
+    //
+    //         },
+    //         {
+    //             extend: 'csvHtml5',
+    //             title: 'Stock Report ' + new Date().toDateString() + ' ' + gettime(),
+    //             exportOptions: {
+    //                 columns: ':not(:last-child)',
+    //             }
+    //
+    //         }
+    //     ]
+    //
+    //
+    // });
 
 
 });

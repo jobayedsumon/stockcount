@@ -4,18 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DistributorProduct extends Model
+class Stock extends Model
 {
-    //
     protected $guarded = [];
-
+    //
     public function distributor()
     {
         return $this->belongsTo(Distributor::class);
     }
 
-    public function product()
+    public function products()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsToMany(Product::class);
     }
+
 }

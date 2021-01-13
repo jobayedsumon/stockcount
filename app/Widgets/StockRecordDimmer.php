@@ -22,7 +22,7 @@ class StockRecordDimmer extends BaseDimmer
      */
     public function run()
     {
-        $count = \App\DistributorProduct::count();
+        $count = \App\Stock::count();
         $string = 'Stock Records';
 
         return view('voyager::dimmer', array_merge($this->config, [

@@ -47,3 +47,7 @@ label {
 .buttons-excel {
     background-color: red !important;
 }
+
+.panel-body p, .panel-body ol {
+    color: #333;
+}

@@ -48,6 +48,12 @@
 
                 </div>
                 <div class="row">
+                    <div class="form-group col-md-3 pl-0">
+                        <label>Opening Date</label><span class="text-danger">*</span>
+                        <input class="form-control " type="date" name="opening_stock_date" id="openingStockDate" required>
+                    </div>
+                </div>
+                <div class="row">
                     <h4 class="text-green-600">Product Filtering</h4>
                     <div class="form-group col-md-4 pl-0">
                         <label>Product Brand</label>
@@ -72,29 +78,18 @@
                     </div>
                 </div>
 
-                <div class="form-group row w-1/4">
-                    <label>Packaging Date</label><span class="text-danger">*</span>
-                    <input class="form-control" type="month" name="pkg_date" id="pkgDate" required>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-md-6 pl-0">
-                        <label class="text-green-600">Distributor file (PDF)</label>
-                        <input type="file" name="pdf">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label class="text-green-600">Distributor file (Excel)</label>
-                        <input type="file" name="excel">
-                    </div>
-
-                </div>
-
-
-
                 <div class="row">
 
-                    <form action="{{ route('update-stock.store') }}" method="POST">
+                    <form action="{{ route('update-stock.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        <div class="form-group col-md-6 pl-0">
+                            <label class="text-green-600">Distributor file (PDF)</label>
+                            <input type="file" name="pdf">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="text-green-600">Distributor file (Excel)</label>
+                            <input type="file" name="excel">
+                        </div>
                         <button class="btn btn-success bg-green-600" id="save">Save</button>
                     </form>
 
@@ -126,14 +121,16 @@
                     <h4 class="text-green-600">Product Stock Management</h4>
 
                     <div class="form-group col-md-3 pl-0">
+                        <label>Packaging Date</label><span class="text-danger">*</span>
+                        <input class="form-control" type="month" name="pkg_date" id="pkgDate" required>
+                    </div>
+
+                    <div class="form-group col-md-3 pl-0">
                         <label>Opening Stock</label><span class="text-danger">*</span>
                         <input class="form-control " type="number" min="0" name="opening_stock" id="openingStock" required>
                     </div>
 
-                    <div class="form-group col-md-3">
-                        <label>Opening Date</label><span class="text-danger">*</span>
-                        <input class="form-control " type="date" name="opening_stock_date" id="openingStockDate" required>
-                    </div>
+
 
                     <div class="form-group col-md-3">
                         <label>Physical Stock</label><span class="text-danger">*</span>

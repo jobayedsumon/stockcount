@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Distributor;
 use App\DistributorProduct;
 use App\Product;
+use App\ProductStock;
+use App\Stock;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,8 +20,18 @@ class StockUpdateController extends Controller
 
     public function index()
     {
-        $stocks = DistributorProduct::latest()->get();
+        $stocks = Stock::latest()->get();
         return view('stockupdate.index', compact('stocks'));
+    }
+
+    public function show($id)
+    {
+        $stock = Stock::findOrFail($id);
+
+        $products = $stock->products()->withPivot('pkg_date', 'opening_stock', 'already_received', 'stock_in_transit',
+            'delivery_done', 'in_delivery_van', 'physical_stock', 'created_at', 'updated_at')->get();
+
+        return view('stockupdate.view', compact('stock', 'products'));
     }
 
     public function create()
@@ -68,46 +80,100 @@ class StockUpdateController extends Controller
     {
         $draftStock = session()->pull('draftStock');
 
+        if (!$draftStock) {
+            $msg = 'No data in drafts.';
+            return redirect(route('update-stock.create'))->with('msg', $msg);
+        }
+
         foreach ($draftStock as $draft) {
 
-            $draft->validate([
+            $validator = Validator::make($draft, [
                 'distributorId' => 'required|numeric',
                 'productId' => 'required|numeric',
                 'openingStock' => 'required|numeric',
                 'physicalStock' => 'required|numeric',
                 'pkgDate' => 'required|date',
+                'openingStockDate' => 'required|date',
                 'alreadyReceived' => 'nullable|numeric',
                 'stockInTransit' => 'nullable|numeric',
                 'deliveryDone' => 'nullable|numeric',
                 'inDeliveryVan' => 'nullable|numeric',
             ]);
+
+            if ($validator->fails()) {
+                $msg = $validator->errors();
+                return response()->json(['msg' => $msg]);
+            }
         }
 
-        try {
             foreach ($draftStock as $draft) {
-                DB::table('distributor_products')->insertOrIgnore([
-                    'distributor_id' => $draft['distributorId'],
-                    'product_id' => $draft['productId'],
-                    'opening_stock' => $draft['openingStock'],
-                    'already_received' => $draft['alreadyReceived'],
-                    'stock_in_transit' => $draft['stockInTransit'],
-                    'delivery_done' => $draft['deliveryDone'],
-                    'in_delivery_van' => $draft['inDeliveryVan'],
-                    'physical_stock' => $draft['physicalStock'],
-                    'pkg_date' => $draft['pkgDate'],
-                    'created_at' => now(),
-                    'updated_at' => now()
+
+                $stock = Stock::where('distributor_id', $draft['distributorId'])->first();
+
+                if ($stock) {
+                    $stock->update([
+                        'stock_opening_date' => $draft['openingStockDate'],
+                        'updated_at' => now()
+                    ]);
+                } else {
+                    $stock = Stock::create([
+                        'distributor_id' => $draft['distributorId'],
+                        'stock_opening_date' => $draft['openingStockDate'],
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ]);
+                }
+
+                $product_stock = ProductStock::where('stock_id', $stock->id)
+                    ->where('product_id', $draft['productId'])->where('pkg_date', $draft['pkgDate'])->first();
+
+                if ($product_stock) {
+
+                    $product_stock->update([
+                        'opening_stock' => $draft['openingStock'],
+                        'already_received' => $draft['alreadyReceived'],
+                        'stock_in_transit' => $draft['stockInTransit'],
+                        'delivery_done' => $draft['deliveryDone'],
+                        'in_delivery_van' => $draft['inDeliveryVan'],
+                        'physical_stock' => $draft['physicalStock'],
+                        'updated_at' => now()
+                    ]);
+
+                } else {
+
+                    DB::table('product_stock')->insert([
+                        'stock_id' => $stock->id,
+                        'product_id' => $draft['productId'],
+                        'pkg_date' => $draft['pkgDate'],
+                        'opening_stock' => $draft['openingStock'],
+                        'already_received' => $draft['alreadyReceived'],
+                        'stock_in_transit' => $draft['stockInTransit'],
+                        'delivery_done' => $draft['deliveryDone'],
+                        'in_delivery_van' => $draft['inDeliveryVan'],
+                        'physical_stock' => $draft['physicalStock'],
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ]);
+                }
+
+
+            }
+
+            $excel = $request->file('excel');
+            $pdf = $request->file('pdf');
+
+            if ($excel) {
+                $excel->store('files/excel');
+                $stock->update([
+                   'excel' => $excel->getClientOriginalName()
                 ]);
             }
-        } catch (\Illuminate\Database\QueryException $exception) {
-            if ($exception->errorInfo[1] == 1062) {
-                $msg = 'Stock for this Product and Distributor already exists!';
-            } else {
-                $msg = 'Can not create stock';
+            if ($pdf) {
+                $pdf->store('files/pdf');
+                $stock->update([
+                    'pdf' => $pdf->getClientOriginalName()
+                ]);
             }
-
-            return redirect(route('update-stock.create'))->with('msg', $msg);
-        }
 
         $msg = 'Stock created successfully!';
         return redirect(route('update-stock.create'))->with('msg', $msg);
@@ -172,7 +238,7 @@ class StockUpdateController extends Controller
 
     public function declare(Request $request)
     {
-        $stock = DistributorProduct::findOrFail($request->stock_id);
+        $stock = Stock::findOrFail($request->stock_id);
         $stock->update([
            'declared' => true,
            'declare_time' => now(),
@@ -189,6 +255,7 @@ class StockUpdateController extends Controller
             'openingStock' => 'required|numeric',
             'physicalStock' => 'required|numeric',
             'pkgDate' => 'required|date',
+            'openingStockDate' => 'required|date',
             'alreadyReceived' => 'nullable|numeric',
             'stockInTransit' => 'nullable|numeric',
             'deliveryDone' => 'nullable|numeric',
@@ -197,7 +264,7 @@ class StockUpdateController extends Controller
 
         if ($validator->fails()) {
             $msg = $validator->errors();
-            return response()->json(['msg' => $msg]);
+            return response()->json(['validationError' => $msg]);
         }
 
         $draftStock = session()->get('draftStock') ?? [];

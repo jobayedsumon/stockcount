@@ -28,16 +28,7 @@
             <tr>
                 <th>S/L No</th>
                 <th>Distributor Name</th>
-                <th>Product Name</th>
-                <th>Product Code</th>
-                <th>Opening Stock</th>
-                <th>Already Received</th>
-                <th>Stock in Transit</th>
-                <th>Delivery Done</th>
-                <th>In Delivery Van</th>
-                <th>Physical Stock</th>
-                <th>Total Stock</th>
-                <th>PKG Date</th>
+                <th>Total Products</th>
                 <th>Declared</th>
                 <th>Declare Time</th>
                 <th>Created At</th>
@@ -50,39 +41,39 @@
             <tr>
                 <td>{{ $loop->index + 1 }}</td>
                 <td>{{ $stock->distributor->name }}</td>
-                <td>{{ $stock->product->name }}</td>
-                <td>{{ $stock->product->code }}</td>
-                <td>{{ $stock->opening_stock }}</td>
-                <td>{{ $stock->already_received }}</td>
-                <td>{{ $stock->stock_in_transit }}</td>
-                <td>{{ $stock->delivery_done }}</td>
-                <td>{{ $stock->in_delivery_van }}</td>
-                <td>{{ $stock->physical_stock }}</td>
-                @php
-
-                    $total = 0;
-
-                    $total += $stock->opening_stock;
-                    $total += $stock->already_received;
-                    $total += $stock->stock_in_transit;
-                    $total -= $stock->delivery_done;
-                    $total -= $stock->in_delivery_van;
-                    $total += $stock->physical_stock;
-
-                    @endphp
-                <td>{{ $total }}</td>
-                <td>{{ $stock->pkg_date ?? '' }}</td>
+                <td>{{ $stock->products()->count() }}</td>
                 <td>{{ $stock->declared ? 'Yes' : 'No' }}</td>
                 <td>{{ $stock->declare_time ?? '' }}</td>
                 <td>{{ $stock->created_at ?? '' }}</td>
                 <td>{{ $stock->updated_at ?? '' }}</td>
                 <td>
+                    <a class="btn btn-success" href="{{ route('update-stock.show', $stock->id) }}">View</a>
                     @if(!$stock->declared)
                         <a class="btn btn-primary" href="{{ route('update-stock.edit', $stock->id) }}">Edit</a>
                     @else
                         <span class="text-danger font-bold">Already Declared</span>
                     @endif
                 </td>
+{{--                <td>{{ $delivery_done }}</td>--}}
+{{--                <td>{{ $in_delivery_van }}</td>--}}
+{{--                <td>{{ $physical_stock }}</td>--}}
+{{--                @php--}}
+
+{{--                    $total = 0;--}}
+
+{{--                    $total += $stock->opening_stock;--}}
+{{--                    $total += $stock->already_received;--}}
+{{--                    $total += $stock->stock_in_transit;--}}
+{{--                    $total -= $stock->delivery_done;--}}
+{{--                    $total -= $stock->in_delivery_van;--}}
+{{--                    $total += $stock->physical_stock;--}}
+
+{{--                    @endphp--}}
+{{--                <td>{{ $total }}</td>--}}
+{{--                <td>{{ $stock->pkg_date ?? '' }}</td>--}}
+
+
+
             </tr>
             @empty
             @endforelse
