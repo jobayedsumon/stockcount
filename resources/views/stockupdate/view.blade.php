@@ -104,6 +104,20 @@
                     <hr>
 
                     <div class="panel-heading">
+                        <h3 class="panel-title">Associated Files</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        @if($stock->pdf)
+                            <p><a href="{{ route('download-pdf', $stock->id) }}">{{ $stock->pdf }}</a></p>
+                        @endif
+                        @if($stock->excel)
+                            <p><a href="{{ route('download-excel', $stock->id) }}">{{ $stock->excel }}</a></p>
+                        @endif
+                    </div>
+                    <hr>
+
+                    <div class="panel-heading">
                         <h3 class="panel-title">Declared</h3>
                     </div>
 
@@ -138,6 +152,27 @@
                         <p>{{ $stock->updated_at }}</p>
                     </div>
                     <hr>
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Declare Stock</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        @if(!$stock->declared)
+                        <form method="POST" action="{{ route('update-stock.declare') }}">
+                            @csrf
+                            <input type="hidden" name="stock_id" value="{{ $stock->id }}">
+                            <button onclick="return alertBeforeDeclare()" class="btn btn-danger text-sm" type="submit">DECLARE</button>
+                            <p style="color: red">(Proceed with caution!)</p>
+                            <p style="color: red">(You can not update once declared)</p>
+                        </form>
+                        @else
+                        <p style="color: red; font-weight: bold">Stcok already declared!</p>
+                        @endif
+                    </div>
+                    <hr>
+
+
 
 
                 </div>

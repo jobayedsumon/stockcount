@@ -23,6 +23,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('update-stock', 'StockUpdateController');
     Route::post('update-stock/declare', 'StockUpdateController@declare')->name('update-stock.declare');
     Route::post('update-stock/draft', 'StockUpdateController@draft')->name('update-stock.draft');
+    Route::get('download/pdf/{stockId}', 'ReportController@download_pdf')->name('download-pdf');
+    Route::get('download/excel/{stockId}', 'ReportController@download_excel')->name('download-excel');
 });
 
 Route::post('/get-asm-area', 'StockUpdateController@get_asm_area');
