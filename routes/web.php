@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/demo', function () {
+    $stocks = \App\Stock::all();
+    return view('report.overall', compact('stocks'));
+});
+
 Route::get('/', function () {
     return redirect('/admin');
 });
@@ -26,6 +31,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('download/pdf/{stockId}', 'ReportController@download_pdf')->name('download-pdf');
     Route::get('download/excel/{stockId}', 'ReportController@download_excel')->name('download-excel');
     Route::get('draft/remove/{draftId}', 'StockUpdateController@remove_draft')->name('remove-draft');
+
+    Route::get('reports', 'ReportController@index')->name('reports');
+    Route::post('reports/individual', 'ReportController@individual_report')->name('individual-report');
+    Route::post('reports/overall', 'ReportController@overall_report')->name('overall-report');
+
 });
 
 Route::post('/get-asm-area', 'StockUpdateController@get_asm_area');
