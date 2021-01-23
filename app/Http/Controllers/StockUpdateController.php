@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use PHPUnit\Framework\Exception;
 use TCG\Voyager\Http\Controllers\VoyagerBaseController;
+use UxWeb\SweetAlert\SweetAlert;
 
 class StockUpdateController extends Controller
 {
@@ -36,7 +37,6 @@ class StockUpdateController extends Controller
 
     public function create()
     {
-        \session()->forget(['draftStock']);
         $distributors = Distributor::select('rsm_area')->distinct()->get();
         $products = Product::select('brandname')->distinct()->get();
         return view('stockupdate.create', compact('distributors', 'products'));
@@ -83,7 +83,7 @@ class StockUpdateController extends Controller
 
         if (!$draftStock) {
             $msg = 'No data in drafts.';
-            return redirect(route('update-stock.create'))->with('msg', $msg);
+            return redirect(route('update-stock.create'))->with(['message' => $msg, 'alert-type' => 'error']);
         }
 
         foreach ($draftStock as $draft) {
@@ -177,7 +177,8 @@ class StockUpdateController extends Controller
             }
 
         $msg = 'Stock created successfully!';
-        return redirect(route('update-stock.create'))->with('msg', $msg);
+            \session()->forget(['draftStock']);
+        return redirect(route('update-stock.create'))->with(['message' => $msg, 'alert-type' => 'success']);
     }
 
     public function edit($id)
@@ -198,6 +199,7 @@ class StockUpdateController extends Controller
 
             $draft = [];
 
+            $draft['draftId'] = uniqid();
             $draft['distributorId'] = $stock->distributor->id;
             $draft['distributorName'] = $stock->distributor->name;
             $draft['openingStockDate'] = $stock->stock_opening_date;
@@ -226,7 +228,7 @@ class StockUpdateController extends Controller
 
         if (!$draftStock) {
             $msg = 'No data in drafts.';
-            return redirect(route('update-stock.edit', $id))->with('msg', $msg);
+            return redirect(route('update-stock.edit', $id))->with(['message' => $msg, 'alert-type' => 'error']);
         }
 
         foreach ($draftStock as $draft) {
@@ -319,8 +321,10 @@ class StockUpdateController extends Controller
             ]);
         }
 
+        \session()->forget(['draftStock']);
+
         $msg = 'Stock updated successfully!';
-        return redirect(route('update-stock.edit', $id))->with('msg', $msg);
+        return redirect(route('update-stock.edit', $id))->with(['message' => $msg, 'alert-type' => 'success']);
     }
 
     public function draft(Request $request)
@@ -359,6 +363,7 @@ class StockUpdateController extends Controller
         $data = $request->all();
         $data['distributorName'] = getDistributorName($request->distributorId);
         $data['productName'] = getProductName($request->productId);
+        $data['draftId'] = uniqid();
 
         array_push($draftStock, $data);
 
@@ -375,8 +380,27 @@ class StockUpdateController extends Controller
             'declared' => true,
             'declare_time' => now(),
         ]);
+        $msg = 'Stock updated successfully';
 
-        return redirect(route('update-stock.show', $stock->id))->with('msg', 'Stock declared successfully');
+        return redirect(route('update-stock.show', $stock->id))->with(['message' => $msg, 'alert-type' => 'success']);
+    }
+
+    public function remove_draft($draftId)
+    {
+
+        $draftStock = \session()->get('draftStock');
+
+        foreach ($draftStock as $i => $draft) {
+            if ($draft['draftId'] == $draftId) {
+                unset($draftStock[$i]);
+                break;
+            }
+        }
+
+        \session()->put('draftStock', $draftStock);
+        $msg = 'Draft removed successfully';
+
+        return $msg;
     }
 
 

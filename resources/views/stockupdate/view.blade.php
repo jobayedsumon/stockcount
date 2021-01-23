@@ -28,7 +28,7 @@
                 <div class="panel panel-bordered">
 
                     <div class="panel-heading">
-                        <h3 class="panel-title">Distributor Name</h3>
+                        <h3 class="panel-title">Distributor</h3>
                     </div>
 
                     <div class="panel-body">
@@ -58,7 +58,7 @@
                                 <th>PKD</th>
                                 <th>Opening Stock</th>
                                 <th>Already Received</th>
-                                <th>Stock In Transit</th>
+                                <th>In Transit</th>
                                 <th>Delivery Done</th>
                                 <th>In Delivery Van</th>
                                 <th>Physical Stock</th>
@@ -108,11 +108,12 @@
                     </div>
 
                     <div class="panel-body">
+
                         @if($stock->pdf)
-                            <p><a href="{{ route('download-pdf', $stock->id) }}">{{ $stock->pdf }}</a></p>
+                            <p class="font-bold">PDF: <a href="{{ route('download-pdf', $stock->id) }}">{{ $stock->pdf }}</a></p>
                         @endif
                         @if($stock->excel)
-                            <p><a href="{{ route('download-excel', $stock->id) }}">{{ $stock->excel }}</a></p>
+                            <p class="font-bold">Excel: <a href="{{ route('download-excel', $stock->id) }}">{{ $stock->excel }}</a></p>
                         @endif
                     </div>
                     <hr>
@@ -181,6 +182,24 @@
 
     </div>
 
+    <script>
+        function alertBeforeDeclare() {
+            value = confirm('Declare? (Can\'t edit anymore!)');
+            if(value) {
+                value = confirm('Are you sure, you want to declare??');
+                if(value) {
+                    input = prompt('Type \'yes\' to declare');
+                    if(input === 'yes') {
+                        value = true;
+                    } else {
+                        value = false;
+                    }
+                }
+            }
+            return value;
+        }
+    </script>
+
 
 
 @stop
@@ -191,15 +210,4 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
 
-    <script>
-
-            $('document').ready(function () {
-
-
-
-        });
-
-
-
-    </script>
 @stop

@@ -27,7 +27,7 @@
             <thead>
             <tr>
                 <th>S/L No</th>
-                <th>Distributor Name</th>
+                <th>Distributor</th>
                 <th>Total Products</th>
                 <th>Declared</th>
                 <th>Declare Time</th>

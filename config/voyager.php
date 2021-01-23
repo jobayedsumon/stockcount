@@ -196,6 +196,7 @@ return [
     ],
 
     'additional_js' => [
+        'js/app.js',
         'js/custom.js',
     ],
 
