@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/demo', function () {
-    $stocks = \App\Stock::all();
-    return view('report.overall', compact('stocks'));
-});
 
 Route::get('/', function () {
     return redirect('/admin');

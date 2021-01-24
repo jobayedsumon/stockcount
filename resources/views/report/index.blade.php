@@ -25,7 +25,7 @@
                 <form action="{{ route('individual-report') }}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label class="text-xl mb-2" for="">Individual Distributor Report</label>
+                        <label class="text-xl mb-2" for="">Individual Distributor Stock Report</label>
                         <select class="form-control selectpicker" name="distributor_id" id="" data-live-search="true">
                             <option value="-1">Nothing Selected</option>
                             @forelse($distributors as $distributor)
@@ -52,7 +52,7 @@
             <div class="col-md-3">
                 <form  action="{{ route('overall-report') }}" method="POST">
                     @csrf
-                    <label class="text-xl mb-2" for="">Overall Distributor Report</label>
+                    <label class="text-xl mb-2" for="">Overall Distributors Stock Report</label>
 
                     <div class="form-group">
                         <input class="form-radio" type="radio" name="export_type" value="csv">

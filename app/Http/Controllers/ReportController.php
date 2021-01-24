@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Distributor;
 use App\Exports\DistributorExport;
+use App\Exports\StockExport;
 use App\ProductStock;
 use App\Stock;
 use Illuminate\Http\Request;
@@ -65,15 +66,16 @@ class ReportController extends Controller
 
         $export_type = $request->export_type;
 
-        $filename = $stock->distributor->name .'_'. now();
+        $filename = 'Overall_Distributors_Stock_Report_'. now();
 
         if ($export_type == 'excel') {
 
-            return Excel::download(new DistributorExport($product_stock),
+            return Excel::download(new StockExport($product_stock),
                 $filename.'.xlsx', \Maatwebsite\Excel\Excel::XLSX);
 
         } else if ($export_type == 'csv') {
-            return Excel::download(new DistributorExport($product_stock),
+
+            return Excel::download(new StockExport($product_stock),
                 $filename.'.csv', \Maatwebsite\Excel\Excel::CSV, [
                     'Content-Type' => 'text/csv',
                 ]);

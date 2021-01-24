@@ -3,6 +3,7 @@
     <tr>
         <th>S/L</th>
         <th>Distributor Name</th>
+        <th>Distributor Code</th>
         <th>Opening Date</th>
         <th>Product Name</th>
         <th>Product Code</th>
@@ -19,44 +20,42 @@
     </tr>
     </thead>
     <tbody>
-    @forelse($stocks as $stock)
+    @forelse($product_stock as $data)
         <tr>
             <td>{{ $loop->index + 1 }}</td>
-            <td>{{ $stock->distributor->name }}</td>
-            <td>{{ $stock->stock_opening_date }}</td>
+            <td>{{ $data->stock->distributor->name }}</td>
+            <td>{{ $data->stock->distributor->code }}</td>
+            <td>{{ $data->stock->stock_opening_date }}</td>
+            <td>{{ $data->product->name }}</td>
+            <td>{{ $data->product->code }}</td>
+            <td>{{ $data->pkg_date }}</td>
+            <td>{{ $data->opening_stock }}</td>
+            <td>{{ $data->already_received }}</td>
+            <td>{{ $data->stock_in_transit }}</td>
+            <td>{{ $data->delivery_done }}</td>
+            <td>{{ $data->in_delivery_van }}</td>
+            <td>{{ $data->physical_stock }}</td>
+
+        @php
+
+            $total = 0;
+
+            $total += $data->opening_stock;
+            $total += $data->already_received;
+            $total += $data->stock_in_transit;
+            $total -= $data->delivery_done;
+            $total -= $data->in_delivery_van;
+            $total += $data->physical_stock;
+
+        @endphp
+        <td>{{ $total }}</td>
+        <td>{{ $data->created_at }}</td>
+        <td>{{ $data->updated_at }}</td>
+
         </tr>
-    @empty
-    @endforelse
 
-    @forelse($products as $product)
-        <tr>
-            <td>{{ $loop->index+1 }}</td>
-            <td>{{ $product->name }}</td>
-            <td>{{ $product->code }}</td>
-            <td>{{ $product->pivot->pkg_date }}</td>
-            <td>{{ $product->pivot->opening_stock }}</td>
-            <td>{{ $product->pivot->already_received }}</td>
-            <td>{{ $product->pivot->stock_in_transit }}</td>
-            <td>{{ $product->pivot->delivery_done }}</td>
-            <td>{{ $product->pivot->in_delivery_van }}</td>
-            <td>{{ $product->pivot->physical_stock }}</td>
-            @php
+        @empty
+        @endforelse
 
-                $total = 0;
-
-                $total += $product->pivot->opening_stock;
-                $total += $product->pivot->already_received;
-                $total += $product->pivot->stock_in_transit;
-                $total -= $product->pivot->delivery_done;
-                $total -= $product->pivot->in_delivery_van;
-                $total += $product->pivot->physical_stock;
-
-            @endphp
-            <td>{{ $total }}</td>
-            <td>{{ $product->pivot->created_at }}</td>
-            <td>{{ $product->pivot->updated_at }}</td>
-        </tr>
-    @empty
-    @endforelse
     </tbody>
 </table>

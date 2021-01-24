@@ -54,25 +54,6 @@
                         <span class="text-danger font-bold">Already Declared</span>
                     @endif
                 </td>
-{{--                <td>{{ $delivery_done }}</td>--}}
-{{--                <td>{{ $in_delivery_van }}</td>--}}
-{{--                <td>{{ $physical_stock }}</td>--}}
-{{--                @php--}}
-
-{{--                    $total = 0;--}}
-
-{{--                    $total += $stock->opening_stock;--}}
-{{--                    $total += $stock->already_received;--}}
-{{--                    $total += $stock->stock_in_transit;--}}
-{{--                    $total -= $stock->delivery_done;--}}
-{{--                    $total -= $stock->in_delivery_van;--}}
-{{--                    $total += $stock->physical_stock;--}}
-
-{{--                    @endphp--}}
-{{--                <td>{{ $total }}</td>--}}
-{{--                <td>{{ $stock->pkg_date ?? '' }}</td>--}}
-
-
 
             </tr>
             @empty
@@ -95,45 +76,11 @@
 
             $('document').ready(function () {
 
-                function gettime() {
-                    var date = new Date();
-                    var newdate = (date.getHours() % 12 || 12) + "_" + date.getMinutes() + "_" + date.getSeconds();
-                    setInterval(gettime, 1000);
-                    return newdate;
-                }
+                $('#Table_ID').DataTable({
 
-            $('#Table_ID').DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'excelHtml5',
-                        title: 'Stock Report ' + new Date().toDateString() + ' ' + gettime(),
-                        exportOptions: {
-                            columns: ':not(:last-child)',
-                        }
-
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'Stock Report ' + new Date().toDateString() + ' ' + gettime(),
-
-                    },
-                    {
-                        extend: 'csvHtml5',
-                        title: 'Stock Report ' + new Date().toDateString() + ' ' + gettime(),
-                        exportOptions: {
-                            columns: ':not(:last-child)',
-                        }
-
-                    }
-                ]
-
+                });
 
             });
-
-        });
-
-
 
     </script>
 @stop
