@@ -110,12 +110,12 @@
                 <h4 class="text-green-600">Product Stock Management</h4>
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label>Opening Stock (In Pieces)</label>
+                        <label>Opening Stock</label>
                         <input class="form-control " type="number" min="0" step="1" value="0" name="opening_stock" id="openingStock" required>
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label>Physical Stock (In Pieces)</label>
+                        <label>Physical Stock</label>
                         <input class="form-control" type="number" min="0" step="1" value="0" name="physical_stock" id="physicalStock" required>
                     </div>
                 </div>
@@ -125,11 +125,11 @@
                 <h4 class="text-green-600 text-center">Purchase</h4>
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label>Already Received (In Pieces)</label>
+                        <label>Already Received</label>
                         <input class="form-control" type="number" min="0" step="1" value="0" id="alreadyReceived" name="already_received">
                     </div>
                     <div class="form-group col-md-6">
-                        <label>In Transit (In Pieces)</label>
+                        <label>In Transit</label>
                         <input class="form-control" type="number" min="0" step="1" value="0" id="stockInTransit" name="stock_in_transit">
                     </div>
                 </div>
@@ -138,11 +138,11 @@
                 <h4 class="text-green-600 text-center">IMS</h4>
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label>Delivery Done (In Pieces)</label>
+                        <label>Delivery Done</label>
                         <input class="form-control" type="number" min="0" step="1" value="0" id="deliveryDone" name="delivery_done">
                     </div>
                     <div class="form-group col-md-6">
-                        <label>In Delivery Van (In Pieces)</label>
+                        <label>In Delivery Van</label>
                         <input class="form-control" type="number" min="0" step="1" value="0" id="inDeliveryVan" name="in_delivery_van">
                     </div>
                 </div>

@@ -1,5 +1,8 @@
 <?php
 
+use App\Distributor;
+use App\ProductStock;
+use App\Stock;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/demo', function () {
+
+
+
+
+
+});
 
 Route::get('/', function () {
     return redirect('/admin');
@@ -21,7 +31,24 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
+
+
+    Route::get('warehouse-stock/adjust-inward/{warehouseId}', 'WarehouseStockController@adjust_inward_form')->name('adjust-inward');
+    Route::post('warehouse-stock/adjust-inward/{warehouseId}', 'WarehouseStockController@adjust_inward_store')->name('adjust-inward');
+    Route::get('warehouse-stock/adjust-outward/{warehouseId}', 'WarehouseStockController@adjust_outward_form')->name('adjust-outward');
+    Route::post('warehouse-stock/adjust-outward/{warehouseId}', 'WarehouseStockController@adjust_outward_store')->name('adjust-outward');
+
+
+
+
+
     Route::resource('update-stock', 'StockUpdateController');
+    Route::resource('warehouse-stock', 'WarehouseStockController');
+
+
+
+
+
     Route::post('update-stock/declare', 'StockUpdateController@declare')->name('update-stock.declare');
     Route::post('update-stock/draft', 'StockUpdateController@draft')->name('update-stock.draft');
     Route::get('download/pdf/{stockId}', 'ReportController@download_pdf')->name('download-pdf');

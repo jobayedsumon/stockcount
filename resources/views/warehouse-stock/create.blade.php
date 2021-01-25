@@ -21,47 +21,23 @@
 
     <div class="container-fluid">
 
-        <h4 class="text-green-600">Distributor Filtering</h4>
+        <h4 class="text-green-600">Select Warehouse</h4>
 
         <div class="page-content row items-center">
 
             <div class="form-group col-md-2">
-                <label>Region</label>
-                <select class="form-control selectpicker" name="rsm_area" id="rsmArea" data-live-search="true">
+                <label>Warehouse</label>
+                <select class="form-control selectpicker" name="warehouse" id="warehouse" data-live-search="true">
                     <option selected value="">Nothing Selected</option>
-                    @forelse($distributors as $distributor)
-                        <option value="{{ $distributor->rsm_area }}">{{ $distributor->rsm_area }}</option>
+                    @forelse($warehouses as $warehouse)
+                        <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
                     @empty
                     @endforelse
                 </select>
             </div>
-            <div class="form-group col-md-2" id="asm">
-                <label>Area</label>
-                <select class="form-control selectpicker" name="asm_area" id="asmArea"
-                        data-live-search="true"></select>
-            </div>
-            <div class="form-group col-md-2" id="tso">
-                <label>Territory</label>
-                <select class="form-control selectpicker" name="tso_area" id="tsoArea"
-                        data-live-search="true"></select>
-            </div>
 
-            <div class="form-group col-md-4" id="db">
-                <label>Distributor</label>
-                <select class="form-control selectpicker" name="distributor_id" id="distributorId" required
-                        data-live-search="true"></select>
-            </div>
-
-            <div class="form-group col-md-2">
-                <label>Opening Date</label>
-                <input class="form-control" type="date" name="opening_stock_date" id="openingStockDate" required>
-            </div>
 
         </div>
-
-
-
-
 
         <h4 class="text-green-600">Product Filtering</h4>
 
@@ -95,47 +71,43 @@
                 </div>
 
 
-        <div class="page-content row items-center">
+        <div class="page-content row items-center ml-0.5">
 
-            <div class="col-md-4">
-                <h4 class="text-green-600">Data Entry</h4>
+            <h4 class="text-green-600 mb-1">Data Entry</h4>
+
+            <div class="col-md-4 border border-green-600 mr-5">
+
+                <h4 class="text-green-600 text-center">Inward</h4>
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label>Opening Stock (In Pieces)</label>
-                        <input class="form-control " type="number" min="0" step="1" value="0" name="opening_stock" id="openingStock" required>
+                        <label>From Factory (In Carton) </label>
+                        <input class="form-control" type="number" min="0" step="1" value="0" id="fromFactory">
                     </div>
-
                     <div class="form-group col-md-6">
-                        <label>Physical Stock (In Pieces)</label>
-                        <input class="form-control" type="number" min="0" step="1" value="0" name="physical_stock" id="physicalStock" required>
+                        <label>From Transfer (In Carton) </label>
+                        <input class="form-control" type="number" min="0" step="1" value="0" id="fromTransfer">
                     </div>
                 </div>
             </div>
 
             <div class="col-md-4 border border-green-600">
-                <h4 class="text-green-600 text-center">Purchase</h4>
+                <h4 class="text-green-600 text-center">Outward</h4>
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label>Already Received (In Pieces)</label>
-                        <input class="form-control" type="number" min="0" step="1" value="0" id="alreadyReceived" name="already_received">
+                        <label>To DB (In Carton) </label>
+                        <input class="form-control" type="number" min="0" step="1" value="0" id="toDb">
                     </div>
                     <div class="form-group col-md-6">
-                        <label>In Transit (In Pieces)</label>
-                        <input class="form-control" type="number" min="0" step="1" value="0" id="stockInTransit" name="stock_in_transit">
+                        <label>To Transfer (In Carton) </label>
+                        <input class="form-control" type="number" min="0" step="1" value="0" id="toTransfer">
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 border border-green-600">
-                <h4 class="text-green-600 text-center">IMS</h4>
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label>Delivery Done (In Pieces)</label>
-                        <input class="form-control" type="number" min="0" step="1" value="0" id="deliveryDone" name="delivery_done">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>In Delivery Van (In Pieces)</label>
-                        <input class="form-control" type="number" min="0" step="1" value="0" id="inDeliveryVan" name="in_delivery_van">
-                    </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>PC/Carton</label>
+                    <input class="form-control" type="number" min="0" step="1" value="0" id="perCarton">
                 </div>
             </div>
 
@@ -149,14 +121,7 @@
                     <div class="row">
                         <form action="{{ route('update-stock.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <div class="form-group col-md-6">
-                                <label class="text-green-600">Distributor file (PDF)</label>
-                                <input type="file" name="pdf">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="text-green-600">Distributor file (Excel)</label>
-                                <input type="file" name="excel">
-                            </div>
+
                             <button onclick="return confirm('Are you sure you want to save?')" type="submit" class="btn btn-danger ml-5 mt-10" id="save">Save</button>
                         </form>
                     </div>
@@ -165,7 +130,7 @@
                 </div>
 
                 <div class="col-md-5">
-                    <button class="btn btn-success" id="draft">Draft</button>
+                    <button class="btn btn-success" id="warehouseDraft">Draft</button>
 
                     <span class="text-danger font-bold" id="msg"></span>
 
@@ -201,19 +166,17 @@
             <table class="table table-striped text-sm">
                 <thead>
                 <tr>
-                    <th>Distributor</th>
-                    <th>Opening Date</th>
+                    <th>Warehouse</th>
                     <th>Product</th>
                     <th>PKD</th>
-                    <th>Opening Stock</th>
-                    <th>Physical Stock</th>
-                    <th>Already Received</th>
-                    <th>In Transit</th>
-                    <th>Delivery Done</th>
-                    <th>Delivery Van</th>
+                    <th>From Factory</th>
+                    <th>From Transfer</th>
+                    <th>To DB</th>
+                    <th>To Transfer</th>
+                    <th>PC/Carton</th>
                 </tr>
                 </thead>
-                <tbody id="draftStockTable">
+                <tbody id="draftWarehouseStockTable">
                     <tr></tr>
                 </tbody>
             </table>

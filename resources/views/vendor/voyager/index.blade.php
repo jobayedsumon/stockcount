@@ -16,70 +16,107 @@
 {{--                </p>--}}
             @endif
 
-            <div class="Dashboard Dashboard--full" id="analytics-dashboard">
-                <header class="Dashboard-header">
-                    <ul class="FlexGrid">
-                        <li class="FlexGrid-item">
-                            <div class="Titles">
-                                <h1 class="Titles-main" id="view-name">{{ __('voyager::analytics.select_view') }}</h1>
-                                <div class="Titles-sub">{{ __('voyager::analytics.various_visualizations') }}</div>
-                            </div>
-                        </li>
-                        <li class="FlexGrid-item FlexGrid-item--fixed">
-                            <div id="active-users-container"></div>
-                        </li>
-                    </ul>
-                    <div id="view-selector-container"></div>
-                </header>
+{{--            <div class="Dashboard Dashboard--full" id="analytics-dashboard">--}}
+{{--                <header class="Dashboard-header">--}}
+{{--                    <ul class="FlexGrid">--}}
+{{--                        <li class="FlexGrid-item">--}}
+{{--                            <div class="Titles">--}}
+{{--                                <h1 class="Titles-main" id="view-name">{{ __('voyager::analytics.select_view') }}</h1>--}}
+{{--                                <div class="Titles-sub">{{ __('voyager::analytics.various_visualizations') }}</div>--}}
+{{--                            </div>--}}
+{{--                        </li>--}}
+{{--                        <li class="FlexGrid-item FlexGrid-item--fixed">--}}
+{{--                            <div id="active-users-container"></div>--}}
+{{--                        </li>--}}
+{{--                    </ul>--}}
+{{--                    <div id="view-selector-container"></div>--}}
+{{--                </header>--}}
 
-                <ul class="FlexGrid FlexGrid--halves">
-                    <li class="FlexGrid-item">
-                        <div class="Chartjs">
-                            <header class="Titles">
-                                <h1 class="Titles-main">{{ __('voyager::analytics.this_vs_last_week') }}</h1>
-                                <div class="Titles-sub">{{ __('voyager::analytics.by_users') }}</div>
-                            </header>
-                            <figure class="Chartjs-figure" id="chart-1-container"></figure>
-                            <ol class="Chartjs-legend" id="legend-1-container"></ol>
+{{--                <ul class="FlexGrid FlexGrid--halves">--}}
+{{--                    <li class="FlexGrid-item">--}}
+{{--                        <div class="Chartjs">--}}
+{{--                            <header class="Titles">--}}
+{{--                                <h1 class="Titles-main">{{ __('voyager::analytics.this_vs_last_week') }}</h1>--}}
+{{--                                <div class="Titles-sub">{{ __('voyager::analytics.by_users') }}</div>--}}
+{{--                            </header>--}}
+{{--                            <figure class="Chartjs-figure" id="chart-1-container"></figure>--}}
+{{--                            <ol class="Chartjs-legend" id="legend-1-container"></ol>--}}
+{{--                        </div>--}}
+{{--                    </li>--}}
+{{--                    <li class="FlexGrid-item">--}}
+{{--                        <div class="Chartjs">--}}
+{{--                            <header class="Titles">--}}
+{{--                                <h1 class="Titles-main">{{ __('voyager::analytics.this_vs_last_year') }}</h1>--}}
+{{--                                <div class="Titles-sub">{{ __('voyager::analytics.by_users') }}</div>--}}
+{{--                            </header>--}}
+{{--                            <figure class="Chartjs-figure" id="chart-2-container"></figure>--}}
+{{--                            <ol class="Chartjs-legend" id="legend-2-container"></ol>--}}
+{{--                        </div>--}}
+{{--                    </li>--}}
+{{--                    <li class="FlexGrid-item">--}}
+{{--                        <div class="Chartjs">--}}
+{{--                            <header class="Titles">--}}
+{{--                                <h1 class="Titles-main">{{ __('voyager::analytics.top_browsers') }}</h1>--}}
+{{--                                <div class="Titles-sub">{{ __('voyager::analytics.by_pageview') }}</div>--}}
+{{--                            </header>--}}
+{{--                            <figure class="Chartjs-figure" id="chart-3-container"></figure>--}}
+{{--                            <ol class="Chartjs-legend" id="legend-3-container"></ol>--}}
+{{--                        </div>--}}
+{{--                    </li>--}}
+{{--                    <li class="FlexGrid-item">--}}
+{{--                        <div class="Chartjs">--}}
+{{--                            <header class="Titles">--}}
+{{--                                <h1 class="Titles-main">{{ __('voyager::analytics.top_countries') }}</h1>--}}
+{{--                                <div class="Titles-sub">{{ __('voyager::analytics.by_sessions') }}</div>--}}
+{{--                            </header>--}}
+{{--                            <figure class="Chartjs-figure" id="chart-4-container"></figure>--}}
+{{--                            <ol class="Chartjs-legend" id="legend-4-container"></ol>--}}
+{{--                        </div>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--            </div>--}}
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="chart" style="height: 500px"></div>
                         </div>
-                    </li>
-                    <li class="FlexGrid-item">
-                        <div class="Chartjs">
-                            <header class="Titles">
-                                <h1 class="Titles-main">{{ __('voyager::analytics.this_vs_last_year') }}</h1>
-                                <div class="Titles-sub">{{ __('voyager::analytics.by_users') }}</div>
-                            </header>
-                            <figure class="Chartjs-figure" id="chart-2-container"></figure>
-                            <ol class="Chartjs-legend" id="legend-2-container"></ol>
-                        </div>
-                    </li>
-                    <li class="FlexGrid-item">
-                        <div class="Chartjs">
-                            <header class="Titles">
-                                <h1 class="Titles-main">{{ __('voyager::analytics.top_browsers') }}</h1>
-                                <div class="Titles-sub">{{ __('voyager::analytics.by_pageview') }}</div>
-                            </header>
-                            <figure class="Chartjs-figure" id="chart-3-container"></figure>
-                            <ol class="Chartjs-legend" id="legend-3-container"></ol>
-                        </div>
-                    </li>
-                    <li class="FlexGrid-item">
-                        <div class="Chartjs">
-                            <header class="Titles">
-                                <h1 class="Titles-main">{{ __('voyager::analytics.top_countries') }}</h1>
-                                <div class="Titles-sub">{{ __('voyager::analytics.by_sessions') }}</div>
-                            </header>
-                            <figure class="Chartjs-figure" id="chart-4-container"></figure>
-                            <ol class="Chartjs-legend" id="legend-4-container"></ol>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+                    </div>
+                </div>
+
+
+
+
         </div>
     </div>
 @stop
 
 @section('javascript')
+
+    <!-- Charting library -->
+    <script src="https://unpkg.com/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <!-- Chartisan -->
+    <script src="https://unpkg.com/@chartisan/chartjs@^2.1.0/dist/chartisan_chartjs.umd.js"></script>
+
+    <script>
+
+        const chart = new Chartisan({
+            el: '#chart',
+            url: "@chart('product_chart')",
+            hooks: new ChartisanHooks()
+                .colors(['#4299E1'])
+                .responsive()
+                .beginAtZero()
+                .legend({ position: 'bottom' })
+                .title('Bar Chart for Stock Records')
+                .datasets([{ type: 'bar', fill: false}, 'bar'])
+                .options({
+                    stepSize: 1
+                }),
+        });
+
+    </script>
+
 
     @if(isset($google_analytics_client_id) && !empty($google_analytics_client_id))
         <script>

@@ -218,6 +218,96 @@ $(document).ready(function () {
 
     });
 
+    $('#warehouseDraft').on('click', function (e) {
+        e.preventDefault();
+
+        distributorId = $('#distributorId').val();
+        productId = $('#productId').val();
+        pkgDate = $('#pkgDate').val();
+        openingStock = $('#openingStock').val();
+        openingStockDate = $('#openingStockDate').val();
+        physicalStock = $('#physicalStock').val();
+        alreadyReceived = $('#alreadyReceived').val();
+        stockInTransit = $('#stockInTransit').val();
+        deliveryDone = $('#deliveryDone').val();
+        inDeliveryVan = $('#inDeliveryVan').val();
+
+        if (!is_int(openingStock) || !is_int(physicalStock)
+            || !is_int(alreadyReceived) || !is_int(stockInTransit)
+            || !is_int(deliveryDone) || !is_int(inDeliveryVan)) {
+
+            $('#msg').text('Float/empty values are not allowed!');
+
+        } else if (!distributorId || !productId) {
+            $('#msg').text('Distributor and product both are required');
+        }
+
+        else if (!openingStockDate || !pkgDate) {
+            $('#msg').text('Opening date and PKD both are required');
+        }
+
+        else {
+
+            $.ajax({
+                url: "/admin/update-stock/draft",
+                type: "POST",
+                data: {
+                    distributorId: distributorId,
+                    productId: productId,
+                    pkgDate: pkgDate,
+                    openingStock: openingStock,
+                    openingStockDate: openingStockDate,
+                    physicalStock: physicalStock,
+                    alreadyReceived: alreadyReceived,
+                    stockInTransit: stockInTransit,
+                    deliveryDone: deliveryDone,
+                    inDeliveryVan: inDeliveryVan,
+                },
+                success: function (data) {
+
+                    if (data.validationError) {
+
+                        $('#validation-errors').empty();
+                        $.each(data.validationError, function (key, value) {
+                            $('#validation-errors').append('<div class="alert alert-danger p-0">' + value + '</div');
+                        });
+
+                    } else if (data.msg) {
+                        $('#validation-errors').empty();
+                        $('#msg').text(data.msg);
+                    } else {
+                        distributorName = data['distributorName'];
+                        productName = data['productName'];
+                        confirmMsg = "Are you sure you want to remove the draft?";
+
+                        html = '<tr>';
+                        html += '<td>' + distributorName + '</td>';
+                        html += '<td>' + productName + '</td>';
+                        html += '<td>' + data["pkgDate"] + '</td>';
+                        html += '<td>' + data["openingStock"] + '</td>';
+                        html += '<td>' + data["openingStockDate"] + '</td>';
+                        html += '<td>' + data["physicalStock"] + '</td>';
+                        html += '<td>' + data["alreadyReceived"] + '</td>';
+                        html += '<td>' + data["stockInTransit"] + '</td>';
+                        html += '<td>' + data["deliveryDone"] + '</td>';
+                        html += '<td>' + data["inDeliveryVan"] + '</td>';
+                        html += '<td><a class="text-danger draftRemove" href="javascript:void(0);" data-draftid="' + data['draftId'] + '">Remove</a></td>';
+                        html += '</tr>';
+
+                        $('#draftStockTable tr:last').after(html);
+                        $('#validation-errors').empty();
+                        $('#msg').empty();
+
+                        swal('Draft added successfully');
+                    }
+
+                },
+
+            });
+        }
+
+    });
+
 
     $(document.body).on('click', '.draftRemove', function (e) {
 
@@ -275,6 +365,9 @@ $(document).ready(function () {
     //
     //
     // });
+
+
+
 
 
 });

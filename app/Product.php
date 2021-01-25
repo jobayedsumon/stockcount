@@ -12,4 +12,9 @@ class Product extends Model
     {
         return $this->belongsToMany(Stock::class);
     }
+
+    public function warehouses()
+    {
+        return $this->belongsToMany(Warehouse::class);
+    }
 }

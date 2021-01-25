@@ -14,5 +14,12 @@ function getProductName($id)
     return $product->name;
 }
 
+function getWarehouseName($id)
+{
+    $warehouse = \App\Warehouse::findOrFail($id);
+
+    return $warehouse->name;
+}
+
 
 ?>
