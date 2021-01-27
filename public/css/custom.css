@@ -3,63 +3,89 @@ body {
 
 }
 
+.navbar-top, .btn-default {
+    background-color: #3faba4 !important;
+}
+
+.btn-default {
+    color: #fff !important;
+}
+
 a {
-    text-decoration: none !important;
+text-decoration: none !important;
 }
 
 .pl-0 {
-    padding-left: 0;
+padding-left: 0;
 }
 
 .mb-0 {
-    margin-bottom: 0 !important;
+margin-bottom: 0 !important;
 }
 
 label {
-    color: #777;
-    font-size: 12px;
-    margin-bottom: 0;
+color: #3faba4;
+font-size: 12px;
+margin-bottom: 0;
 }
 
 .form-control {
-    border: 1px solid green;
-    height: 20px;
+border: 1px solid green;
+height: 20px;
 }
 
 input[type='file'] {
-    padding: 0 !important;
+padding: 0 !important;
 }
 
 .bootstrap-select .btn-default {
-    background-color: #fff !important;
-    color: #777 !important;
-    height: 20px;
-    font-size: 12px !important;
-    padding: 0px !important;
-    margin: 0 !important;
-    text-align: center !important;
+background-color: #fff !important;
+color: #777 !important;
+height: 20px;
+font-size: 12px !important;
+padding: 0px !important;
+margin: 0 !important;
+text-align: center !important;
 }
 
 .bootstrap-select .dropdown-toggle .filter-option-inner-inner {
-    text-align: center !important;
+text-align: center !important;
 }
 
 .table, option {
-    color: #333 !important;
+color: #333 !important;
 }
 
 #asm, #tso, #db, #category, #name {
-    display: none;
+display: none;
+}
+
+.buttons-csv, .buttons-excel, .buttons-copy {
+background-image: none !important;
+color: #fff !important;
 }
 
 .buttons-csv {
-    background-color: yellow !important;
+background-color: 	#5cb85c !important;
 }
 
 .buttons-excel {
-    background-color: red !important;
+background-color: #428bca !important;
+}
+
+.buttons-copy {
+background-color: #d9534f !important;
 }
 
 .panel-body p, .panel-body ol {
-    color: #333;
+color: #333;
 }
+
+.page-title, .dataTables_info, .voyager .pagination>li>a {
+color: #3faba4 !important;
+}
+
+.voyager .pagination .active>a {
+color: #fff !important;
+}
+

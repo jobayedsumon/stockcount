@@ -3,19 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Distributor;
+use App\Imports\WarehouseImport;
 use App\Product;
 use App\ProductWarehouse;
 use App\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Validator;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class WarehouseStockController extends Controller
 {
 
     public function index()
     {
+        $total_inward = 0;
+        $total_outward = 0;
         //
         $warehouses = Warehouse::with('products')->get();
+        foreach ($warehouses as $warehouse) {
+            foreach ($warehouse->products as $product) {
+                $total_inward += $product->pivot->from_factory_count;
+                $total_inward += $product->pivot->from_transfer_count;
+                $total_outward += $product->pivot->to_db_count;
+                $total_outward += $product->pivot->to_transfer_count;
+            }
+            $warehouse->total_inward = $total_inward;
+            $warehouse->total_outward = $total_outward;
+        }
         return view('warehouse-stock.index', compact('warehouses'));
     }
 
@@ -250,6 +265,18 @@ class WarehouseStockController extends Controller
                     ->with(['message' => 'Outward stock adjusting failed to warehouse!', 'alert-type' => 'error']);
             }
         }
+
+
+    }
+
+    public function import(Request $request, $id)
+    {
+        if ($request->hasFile('import_file')) {
+            Excel::import(new WarehouseImport, $request->file('import_file')->getRealPath());
+        } else {
+            return back()->with(['message' => 'No file chosen!', 'alert-type' => 'error']);
+        }
+
 
 
     }

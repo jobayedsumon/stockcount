@@ -43,6 +43,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 
     Route::resource('update-stock', 'StockUpdateController');
+    Route::post('warehouse-stock/{id}/import', 'WarehouseStockController@import')->name('warehouse-import');
     Route::resource('warehouse-stock', 'WarehouseStockController');
 
 

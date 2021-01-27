@@ -29,6 +29,10 @@
     .bootstrap-select .dropdown-toggle .filter-option-inner-inner {
         all: unset !important;
     }
+
+    h1, h3 {
+        color: #3faba4 !important;
+    }
 </style>
 
 
@@ -121,12 +125,12 @@
                             <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
                                    id="grid-first-name" type="number" min="0" value="0" name="from_factory_per_carton">
                         </div>
-                        <div class="md:w-1/4 px-3">
+                        <div class="md:w-1/5">
                             <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
                                 In Date
                             </label>
                             <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
-                                   id="grid-first-name" type="date" name="from_factory_date">
+                                   id="grid-first-name" type="datetime-local" name="from_factory_date">
                         </div>
                     </div>
 
@@ -191,12 +195,12 @@
                             <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
                                    id="grid-first-name" type="number" min="0" value="1" name="from_transfer_per_carton">
                         </div>
-                        <div class="md:w-1/4 px-3">
+                        <div class="md:w-1/5">
                             <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
                                 In Date
                             </label>
                             <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
-                                   id="grid-first-name" type="date" name="from_transfer_date">
+                                   id="grid-first-name" type="datetime-local" name="from_transfer_date">
                         </div>
                     </div>
 

@@ -7,12 +7,17 @@
 @stop
 
 @section('page_header')
-    <h1 class="page-title">
-        <i class="voyager-pie-chart"></i>
-        Warehouse Stock Data
-    </h1>
+    <div class="page-header">
+        <h1 class="page-title">
+            <i class="voyager-pie-chart"></i>
+            Warehouse Stock Data
+        </h1>
 
-    <a class="btn btn-success" href="{{ route('warehouse-stock.create') }}">Create New Stock Record</a>
+        <a class="btn btn-success" href="{{ route('warehouse-stock.create') }}">Create New Stock Record</a>
+    </div>
+
+
+
 
     @if(session()->has('msg'))
         <span class="text-success font-bold">{{ session()->get('msg') }}</span>
@@ -23,7 +28,7 @@
 
     <div class="page-content container">
 
-        <table id="Table_ID" class="table">
+        <table id="Table_ID" class="table-bordered cell-border hover order-column row-border stripe mdl-data-table">
             <thead>
             <tr class="text-black">
                 <th>S/L No</th>
@@ -47,9 +52,9 @@
                 <td>{{ $warehouse->code }}</td>
                 <td>{{ $warehouse->opening_stock_count }}</td>
                 <td>{{ $warehouse->opening_stock_date }}</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
+                <td>{{ $warehouse->total_inward }}</td>
+                <td>{{ $warehouse->total_outward }}</td>
+                <td>{{ $warehouse->opening_stock_count + $warehouse->total_inward - $warehouse->total_outward }}</td>
                 <td>{{ $warehouse->created_at ?? '' }}</td>
                 <td>{{ $warehouse->updated_at ?? '' }}</td>
                 <td>
@@ -95,10 +100,53 @@
             $('document').ready(function () {
 
                 $('#Table_ID').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        {
+                            extend: 'excelHtml5',
+                            title: 'Overall Stock Report for all warehouses ' + new Date().toDateString() + ' ' + gettime(),
+                            exportOptions: {
+                                columns: ':not(:last-child)',
+                            }
 
-                });
+                        },
+                        'copy',
+                        {
+                            extend: 'csvHtml5',
+                            title: 'Stock Report for all warehouses ' + new Date().toDateString() + ' ' + gettime(),
+                            exportOptions: {
+                                columns: ':not(:last-child)',
+                            }
 
+                        },
+                    ],
+                    "scrollX": true,
+                    "createdRow": function(row, data, dataIndex) {
+                        $('#Table_ID thead tr th').css({
+                            "border-bottom": "1px solid #fff",
+                            "font-weight": "600",
+                            "background-color": "#3faba4",
+                            "color": "white"
+                        });
+                    },
+
+                    autoWidth: false,
+                    columnDefs: [
+                        {
+                            targets: ['_all'],
+                            className: 'mdc-data-table__cell'
+                        }
+                    ]
+
+                })
             });
+
+            function gettime() {
+                var date = new Date();
+                var newdate = (date.getHours() % 12 || 12) + "_" + date.getMinutes() + "_" + date.getSeconds();
+                setInterval(gettime, 1000);
+                return newdate;
+            }
 
     </script>
 @stop
