@@ -271,8 +271,16 @@ class WarehouseStockController extends Controller
 
     public function import(Request $request, $id)
     {
+
         if ($request->hasFile('import_file')) {
-            Excel::import(new WarehouseImport, $request->file('import_file')->getRealPath());
+
+            $request->validate([
+                'import_file' => 'required|mimes:csv,txt'
+            ]);
+
+
+                Excel::import(new WarehouseImport($id), $request->file('import_file')->getRealPath());
+            return back()->with(['message' => 'Data imported successfully!', 'alert-type' => 'success']);
         } else {
             return back()->with(['message' => 'No file chosen!', 'alert-type' => 'error']);
         }

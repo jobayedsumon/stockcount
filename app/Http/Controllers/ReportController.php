@@ -27,6 +27,11 @@ class ReportController extends Controller
         return response()->download(storage_path('app'.DIRECTORY_SEPARATOR.'files'.DIRECTORY_SEPARATOR.'excel'.DIRECTORY_SEPARATOR.$stock->excel));
     }
 
+    public function download_stock_upload_demo()
+    {
+        return response()->download(storage_path('app'.DIRECTORY_SEPARATOR.'files'.DIRECTORY_SEPARATOR.'stock_upload_demo.csv'));
+    }
+
     public function index()
     {
         $stock_ids = Stock::all()->pluck('distributor_id');

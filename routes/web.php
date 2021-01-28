@@ -54,6 +54,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('update-stock/draft', 'StockUpdateController@draft')->name('update-stock.draft');
     Route::get('download/pdf/{stockId}', 'ReportController@download_pdf')->name('download-pdf');
     Route::get('download/excel/{stockId}', 'ReportController@download_excel')->name('download-excel');
+    Route::get('download/stock-upload-demo', 'ReportController@download_stock_upload_demo')->name('download-demo');
     Route::get('draft/remove/{draftId}', 'StockUpdateController@remove_draft')->name('remove-draft');
 
     Route::get('reports', 'ReportController@index')->name('reports');

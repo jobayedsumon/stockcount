@@ -23,7 +23,7 @@
 
     <div class="page-content container">
 
-        <table id="Table_ID" class="table">
+        <table id="Table_ID" class="table-bordered cell-border hover order-column row-border stripe mdl-data-table">
             <thead>
             <tr>
                 <th>S/L No</th>
@@ -74,13 +74,68 @@
 
     <script>
 
-            $('document').ready(function () {
+            $('#Table_ID').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Overall Stock Report for all distributors ' + new Date().toDateString() + ' ' + gettime(),
+                        exportOptions: {
+                            columns: ':not(:last-child)',
+                        },
+                        text:      '<img src="/icons/excel.png">',
+                        titleAttr: 'Excel'
 
-                $('#Table_ID').DataTable({
+                    },
+                    {
+                        extend: 'copyHtml5',
+                        title: 'Overall Stock Report for all distributors ' + new Date().toDateString() + ' ' + gettime(),
+                        exportOptions: {
+                            columns: ':not(:last-child)',
+                        },
+                        text:      '<img src="/icons/copy.png">',
+                        titleAttr: 'Copy'
 
-                });
+                    },
+
+                    {
+                        extend: 'csvHtml5',
+                        title: 'Stock Report for all distributors ' + new Date().toDateString() + ' ' + gettime(),
+                        exportOptions: {
+                            columns: ':not(:last-child)',
+                        },
+                        text:      '<img src="/icons/csv.png">',
+                        titleAttr: 'Csv'
+
+                    },
+                ],
+                "scrollX": true,
+                "createdRow": function(row, data, dataIndex) {
+                    $('#Table_ID thead tr th').css({
+                        "border-bottom": "1px solid #fff",
+                        "font-weight": "600",
+                        "background-color": "#3faba4",
+                        "color": "white"
+                    });
+                },
+
+                autoWidth: false,
+                columnDefs: [
+                    {
+                        targets: ['_all'],
+                        className: 'mdc-data-table__cell'
+                    }
+                ]
 
             });
+
+
+            function gettime() {
+                var date = new Date();
+                var newdate = (date.getHours() % 12 || 12) + "_" + date.getMinutes() + "_" + date.getSeconds();
+                setInterval(gettime, 1000);
+                return newdate;
+            }
 
     </script>
 @stop

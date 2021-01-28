@@ -3,6 +3,24 @@ body {
 
 }
 
+.voyager .navbar.navbar-default>.container-fluid:after, .voyager .navbar>.container-fluid {
+     border-bottom: none !important;
+     width: 100% !important;
+     height: 0px !important;
+}
+
+.caret {
+    display: inline !important;
+}
+
+.flex {
+    border: none !important;
+}
+
+.navbar-header .navbar-brand img {
+    border-radius: 50% !important;
+}
+
 .navbar-top, .btn-default {
     background-color: #3faba4 !important;
 }
@@ -60,22 +78,27 @@ color: #333 !important;
 display: none;
 }
 
-.buttons-csv, .buttons-excel, .buttons-copy {
-background-image: none !important;
-color: #fff !important;
+button.dt-button, div.dt-button, a.dt-button {
+    background-color: #fff !important;
+    border: none !important;
 }
 
-.buttons-csv {
-background-color: 	#5cb85c !important;
-}
+/*.buttons-csv, .buttons-excel, .buttons-copy {*/
+/*background-image: none !important;*/
+/*color: #fff !important;*/
+/*}*/
 
-.buttons-excel {
-background-color: #428bca !important;
-}
+/*.buttons-csv {*/
+/*background-color: 	#5cb85c !important;*/
+/*}*/
 
-.buttons-copy {
-background-color: #d9534f !important;
-}
+/*.buttons-excel {*/
+/*background-color: #428bca !important;*/
+/*}*/
+
+/*.buttons-copy {*/
+/*background-color: #d9534f !important;*/
+/*}*/
 
 .panel-body p, .panel-body ol {
 color: #333;

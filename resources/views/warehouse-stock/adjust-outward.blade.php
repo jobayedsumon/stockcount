@@ -125,13 +125,13 @@
                             <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
                                    id="grid-first-name" type="number" min="0" value="0" name="to_db_count">
                         </div>
-                        <div class="md:w-1/4 px-2">
-                            <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
-                                PC/Carton
-                            </label>
-                            <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
-                                   id="grid-first-name" type="number" min="0" value="0" name="to_db_per_carton">
-                        </div>
+{{--                        <div class="md:w-1/4 px-2">--}}
+{{--                            <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">--}}
+{{--                                PC/Carton--}}
+{{--                            </label>--}}
+{{--                            <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"--}}
+{{--                                   id="grid-first-name" type="number" min="0" value="0" name="to_db_per_carton">--}}
+{{--                        </div>--}}
                         <div class="md:w-1/5">
                             <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
                                 Out Date
@@ -195,13 +195,13 @@
                             <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
                                    id="grid-first-name" type="number" min="0" value="0" name="to_transfer_count">
                         </div>
-                        <div class="md:w-1/4 px-3">
-                            <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
-                                PC/Carton
-                            </label>
-                            <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
-                                   id="grid-first-name" type="number" min="0" value="1" name="to_transfer_per_carton">
-                        </div>
+{{--                        <div class="md:w-1/4 px-3">--}}
+{{--                            <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">--}}
+{{--                                PC/Carton--}}
+{{--                            </label>--}}
+{{--                            <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"--}}
+{{--                                   id="grid-first-name" type="number" min="0" value="1" name="to_transfer_per_carton">--}}
+{{--                        </div>--}}
                         <div class="md:w-1/5">
                             <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
                                 Out Date

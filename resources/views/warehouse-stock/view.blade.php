@@ -18,12 +18,32 @@
             <span id="warehouseName">Stock Report for {{ $warehouse->name }} </span>
         </h1>
 
-        <form action="{{ route('warehouse-import', $warehouse->id) }}" method="POST" enctype="multipart/form-data" class="mr-10">
-            @csrf
-            <label for="">Upload CSV file</label>
-            <input type="file" name="import_file" class="p-10" required>
-            <button class="btn btn-default" type="submit">Upload</button>
-        </form>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+
+
+        <div>
+
+            <form action="{{ route('warehouse-import', $warehouse->id) }}" method="POST" enctype="multipart/form-data" class="mr-10">
+                @csrf
+                <label for="">Upload CSV file</label>
+                <input type="file" name="import_file" class="p-10" required>
+                <button class="btn btn-default" type="submit">Upload</button>
+                <a class="ml-5 btn bg-yellow-200 text-black" href="{{ route('download-demo') }}">Demo file</a>
+            </form>
+
+
+        </div>
+
+
     </div>
 
 
@@ -72,7 +92,7 @@
                                 <th colspan="3"></th>
                                 <th colspan="6" class="text-center">Inward</th>
                                 <th colspan="6" class="text-center">Outward</th>
-                                <th colspan="2"></th>
+                                <th colspan="3"></th>
 
                             </tr>
                             <tr>
@@ -81,7 +101,7 @@
                                 <th colspan="3" class="text-center">Warehouse</th>
                                 <th colspan="3" class="text-center">DB</th>
                                 <th colspan="3" class="text-center">Warehouse</th>
-                                <th colspan="2"></th>
+                                <th colspan="4"></th>
                             </tr>
                             <tr>
                                 <th>S/L</th>
@@ -185,16 +205,29 @@
                     title: warehouseName + new Date().toDateString() + ' ' + gettime(),
                     exportOptions: {
                         columns: ':not(:last-child)',
-                    }
+                    },
+                    text:      '<img src="/icons/excel.png">',
+                    titleAttr: 'Excel'
 
                 },
-                'copy',
+                {
+                    extend: 'copyHtml5',
+                    title: warehouseName + new Date().toDateString() + ' ' + gettime(),
+                    exportOptions: {
+                        columns: ':not(:last-child)',
+                    },
+                    text:      '<img src="/icons/copy.png">',
+                    titleAttr: 'Copy'
+
+                },
                 {
                     extend: 'csvHtml5',
                     title: warehouseName + new Date().toDateString() + ' ' + gettime(),
                     exportOptions: {
                         columns: ':not(:last-child)',
-                    }
+                    },
+                    text:      '<img src="/icons/csv.png">',
+                    titleAttr: 'Csv'
 
                 },
             ],

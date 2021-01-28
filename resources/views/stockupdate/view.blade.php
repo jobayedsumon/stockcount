@@ -9,7 +9,7 @@
 @section('page_header')
     <h1 class="page-title">
         <i class="voyager-pie-chart"></i>
-        Stock Data
+        <span id="distributorName">Stock Report for {{ $stock->distributor->name }} </span>
     </h1>
 
 
@@ -49,7 +49,7 @@
                     </div>
 
                     <div class="panel-body">
-                        <table class="table table-striped" style="color: #333">
+                        <table id="Table_ID" class="table-bordered cell-border hover order-column row-border stripe mdl-data-table" style="color: #333">
                             <thead>
                             <tr>
                                 <th>S/L</th>
@@ -182,7 +182,22 @@
 
     </div>
 
+@stop
+
+@section('javascript')
+
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+
+
+
     <script>
+
+        $('document').ready(function () {
+
+            distributorName = $('#distributorName').text();
+
         function alertBeforeDeclare() {
             value = confirm('Declare? (Can\'t edit anymore!)');
             if(value) {
@@ -198,16 +213,80 @@
             }
             return value;
         }
+
+
+            $('#Table_ID').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        title: distributorName + new Date().toDateString() + ' ' + gettime(),
+                        exportOptions: {
+                            columns: ':not(:last-child)',
+                        },
+                        text:      '<img src="/icons/excel.png">',
+                        titleAttr: 'Excel'
+
+                    },
+                    {
+                        extend: 'copyHtml5',
+                        title: distributorName + new Date().toDateString() + ' ' + gettime(),
+                        exportOptions: {
+                            columns: ':not(:last-child)',
+                        },
+                        text:      '<img src="/icons/copy.png">',
+                        titleAttr: 'Copy'
+
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        title: distributorName + new Date().toDateString() + ' ' + gettime(),
+                        exportOptions: {
+                            columns: ':not(:last-child)',
+                        },
+                        text:      '<img src="/icons/csv.png">',
+                        titleAttr: 'Csv'
+
+                    },
+                ],
+                "scrollX": true,
+                "createdRow": function(row, data, dataIndex) {
+                    $('#Table_ID thead tr th').css({
+                        "border-bottom": "1px solid #fff",
+                        "font-weight": "600",
+                        "background-color": "#3faba4",
+                        "color": "white"
+                    });
+                },
+
+                autoWidth: false,
+                columnDefs: [
+                    {
+                        targets: ['_all'],
+                        className: 'mdc-data-table__cell'
+                    }
+                ]
+
+            });
+
+
+            function gettime() {
+                var date = new Date();
+                var newdate = (date.getHours() % 12 || 12) + "_" + date.getMinutes() + "_" + date.getSeconds();
+                setInterval(gettime, 1000);
+                return newdate;
+            }
+
+        });
+
     </script>
 
 
 
 @stop
 
-@section('javascript')
 
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
 
-@stop
+
+
+

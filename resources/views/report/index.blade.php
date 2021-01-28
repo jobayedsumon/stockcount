@@ -34,13 +34,13 @@
                             @endforelse
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group flex">
                         <input class="form-radio" type="radio" name="export_type" value="csv">
-                        <span class="ml-2 font-bold">CSV</span>
+                        <img class="ml-2" src="/icons/csv.png" alt="CSV">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group flex">
                         <input class="form-radio" type="radio" name="export_type" value="excel">
-                        <span class="ml-2 font-bold">Excel</span>
+                        <img class="ml-2" src="/icons/excel.png" alt="Excel">
                     </div>
 
                     <div class="form-group">
@@ -54,13 +54,13 @@
                     @csrf
                     <label class="text-xl mb-2" for="">Overall Distributors Stock Report</label>
 
-                    <div class="form-group">
+                    <div class="form-group flex">
                         <input class="form-radio" type="radio" name="export_type" value="csv">
-                        <span class="ml-2 font-bold">CSV</span>
+                        <img class="ml-2" src="/icons/csv.png" alt="CSV">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group flex">
                         <input class="form-radio" type="radio" name="export_type" value="excel">
-                        <span class="ml-2 font-bold">Excel</span>
+                        <img class="ml-2" src="/icons/excel.png" alt="Excel">
                     </div>
 
                     <div class="form-group">

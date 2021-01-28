@@ -107,16 +107,30 @@
                             title: 'Overall Stock Report for all warehouses ' + new Date().toDateString() + ' ' + gettime(),
                             exportOptions: {
                                 columns: ':not(:last-child)',
-                            }
+                            },
+                            text:      '<img src="/icons/excel.png">',
+                            titleAttr: 'Excel'
 
                         },
-                        'copy',
+                        {
+                            extend: 'copyHtml5',
+                            title: 'Overall Stock Report for all warehouses ' + new Date().toDateString() + ' ' + gettime(),
+                            exportOptions: {
+                                columns: ':not(:last-child)',
+                            },
+                            text:      '<img src="/icons/copy.png">',
+                            titleAttr: 'Copy'
+
+                        },
+
                         {
                             extend: 'csvHtml5',
                             title: 'Stock Report for all warehouses ' + new Date().toDateString() + ' ' + gettime(),
                             exportOptions: {
                                 columns: ':not(:last-child)',
-                            }
+                            },
+                            text:      '<img src="/icons/csv.png">',
+                            titleAttr: 'Csv'
 
                         },
                     ],
